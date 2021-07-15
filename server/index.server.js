@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const morgan = reuqire("morgan");
-const helmet = reuqire("helmet");
+const morgan = require("morgan");
+const helmet = require("helmet");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 
@@ -17,6 +17,12 @@ app.use(express.json());
 app.use(helmet());
 app.use(cors());
 app.use(morgan("common"));
+
+// Importing Routes
+const authRoute = require('./routes/auth.route');
+
+// Routing
+app.use('/api/auth', authRoute);
 
 // PORT
 const port = process.env.PORT || 5000;

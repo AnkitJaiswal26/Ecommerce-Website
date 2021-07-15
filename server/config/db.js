@@ -7,7 +7,7 @@ module.exports = connnectDB = async () => {
 			useFindAndModify: true,
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
-			useFindAndModify: true,
+			useFindAndModify: false,
 		});
 		console.log(`MongoDB connnected: ${con.connection.host}`);
 	} catch (err) {
