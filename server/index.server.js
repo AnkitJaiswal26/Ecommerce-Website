@@ -19,10 +19,10 @@ app.use(cors());
 app.use(morgan("common"));
 
 // Importing Routes
-const authRoute = require('./routes/auth.route');
+const authRoute = require("./routes/auth.route");
 
 // Routing
-app.use('/api/auth', authRoute);
+app.use("/api/auth", authRoute);
 
 // PORT
 const port = process.env.PORT || 5000;
