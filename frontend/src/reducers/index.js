@@ -1,3 +1,3 @@
-export default (state={name:"Pablo"}, action)=>{
+export const rootReducer = (state={name:"Pablo"}, action)=>{
     return state;
 };
