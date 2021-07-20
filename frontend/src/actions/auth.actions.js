@@ -143,7 +143,7 @@ export const forgotPassword = (email) => {
 				},
 			});
 		}
-		const res = await axios.post("/forgotPassword", email);
+		const res = await axios.put("/forgotPassword", email);
 		if (res.status === 200) {
 			dispatch({
 				type: authConstants.FORGOT_PASSWORD_SUCCESS,
