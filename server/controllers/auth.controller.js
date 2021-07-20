@@ -17,8 +17,8 @@ exports.registerController = (req, res) => {
 
   if (!errors.isEmpty()) {
     const firstError = errors.array().map((error) => error.msg)[0];
-    return res.status(422).json({
-      errors: firstError,
+    return res.status(400).json({
+      erros: firstError,
     });
   } else {
     User.findOne({
@@ -26,7 +26,7 @@ exports.registerController = (req, res) => {
     }).exec((err, user) => {
       if (user) {
         return res.status(400).json({
-          errors: "User already exists",
+          error: "User already exists",
         });
       }
 
@@ -58,14 +58,14 @@ exports.registerController = (req, res) => {
       sgMail
         .send(emailData)
         .then((sent) => {
-          return res.json({
+          return res.status(200).json({
             message: `Email has been sent to ${email}`,
           });
         })
         .catch((err) => {
           return res.status(400).json({
             success: false,
-            errors: "Could not send email\n" + err,
+            error: "Could not send email\n" + err,
           });
         });
     });
@@ -82,8 +82,8 @@ exports.activationController = (req, res) => {
       async (err, decoded) => {
         if (err) {
           console.log("Activation err");
-          return res.status(401).json({
-            errors: "Expired link. Register Again",
+          return res.status(400).json({
+            error: "Expired link. Register Again",
           });
         } else {
           try {
@@ -100,23 +100,21 @@ exports.activationController = (req, res) => {
             console.log(user);
             user.save((err, user) => {
               if (err) {
-                console.log("Save error");
-                console.log(err);
-                return res.status(401).json({
-                  errors: "Some error occured! Please try again" + err,
+                return res.status(400).json({
+                  error: "Some error occured! Please try again" + err,
                 });
               } else {
-                return res.json({
+                return res.status(400).json({
                   success: true,
                   message: user,
-                  message: "Register Success",
+                  message: "Register Success! Please Login now to continue.",
                 });
               }
             });
           } catch (err) {
             console.log(err);
-            return res.status(401).json({
-              errors: "Some error occured! Please try again",
+            return res.status(400).json({
+              error: "Some error occured! Please try again",
             });
           }
         }
@@ -135,8 +133,8 @@ exports.loginController = (req, res) => {
 
   if (!errors.isEmpty()) {
     const firstError = errors.array().map((error) => error.msg)[0];
-    return res.status(422).json({
-      errors: firstError,
+    return res.status(400).json({
+      error: firstError,
     });
   } else {
     User.findOne({
@@ -144,13 +142,13 @@ exports.loginController = (req, res) => {
     }).exec(async (err, user) => {
       if (err || !user) {
         return res.status(400).json({
-          errors: "User does not exists. Please register",
+          error: "User does not exists. Please register",
         });
       }
 
       if (!(await user.authenticate(password))) {
         return res.status(400).json({
-          errors: "Email and password do not match",
+          error: "Email and password do not match",
         });
       }
 
@@ -186,8 +184,8 @@ exports.forgotPasswordController = (req, res) => {
 
   if (!errors.isEmpty()) {
     const firstError = errors.array().map((error) => error.msg)[0];
-    return res.status(422).json({
-      errors: firstError,
+    return res.status(400).json({
+      error: firstError,
     });
   } else {
     User.findOne({
@@ -258,8 +256,8 @@ exports.resetPasswordController = (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const firstError = errors.array().map((error) => error.msg)[0];
-    return res.status(422).json({
-      errors: firstError,
+    return res.status(400).json({
+      error: firstError,
     });
   } else {
     if (resetPasswordLink) {
@@ -306,8 +304,8 @@ exports.resetPasswordController = (req, res) => {
                 });
               } catch (err) {
                 console.log(err);
-                return res.status(401).json({
-                  errors: "Something went Wrong. Try again later!",
+                return res.status(400).json({
+                  error: "Something went Wrong. Try again later!",
                 });
               }
             }
