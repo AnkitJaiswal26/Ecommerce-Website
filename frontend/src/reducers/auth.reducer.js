@@ -101,5 +101,6 @@ export const authReducer = (state = initState, action) => {
             }
             break
 		default:
+			return initState
 	}
 };
