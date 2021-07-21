@@ -1,55 +1,88 @@
 const Product = require("../models/Product.model");
 const Cart = require("../models/Cart.model");
 
-const wrapAsync = require("../utils/wrapAsync");
+// Returns the user's current cart
+exports.getCart = async(req,res) => {
 
-exports.addItemController = wrapAsync(async(req,res) => {
+    const cart = await Cart.findOne({ userId : "60f02ba894e9392670f15871" }).populate('products.productId', 'name price');
+    return res.status(200).json({
+        cart })
+}
 
-    const { productId, quantity } = req.body;
+exports.addOneItemController = async(req,res) => {
+
+    const { productId } = req.params;
     const product = await Product.findById(productId);
+    const cart = await Cart.findOne({ userId : req.body.user._id });
     
-    const cart = await Cart.findById(req.user._id);
     if(cart){
-        
-        cart.userId = req.user._id;
-        cart.products.push({ name:product[name], 
-            slug:product[slug], 
-            quantity, 
-            price: product[price] });
+
+        const itemIndex = cart.products.findIndex(p => p.productId == productId);
+        if (itemIndex > -1) {
+            cart.products[itemIndex].quantity += 1;
+        }else{
+            cart.products.push({
+                productId,
+                quantity: 1
+            });
+        }
+        cart.total += product.price;
+
+        await cart.save();
+        return res.redirect("/api/cart");
     } else{
-        const cart = new Cart({
-            userId : req.user._id,
-            products: [{ name:product[name], 
-                slug:product[slug], 
-                quantity, 
-                price: product[price] }]
+        const newCart = new Cart({
+            userId : req.body.user._id,
+            products: [ {
+                productId,
+                quantity : 1
+            } ],
+            total : product.price
         });
-    }
-    cart = await cart.save();
-    res.status(201).json(cart);
-})
 
-exports.removeItemController = wrapAsync(async(req,res) => {
+        await newCart.save();
+        return res.redirect("/api/cart");
+    }
+}
+
+exports.removeOneItemController = async(req,res) => {
 
     const { productId } = req.params;
-    await Cart.findByIdAndUpdate(req.user._id, { $pull : { products: productId }});
-    res.send('Successfully Deleted Item');
-})
+    const cart = await Cart.findOne({ userId : req.body.user._id }).populate('products.productId', 'name price');
+    const itemIndex = cart.products.findIndex(p => p.productId._id == productId);
 
-exports.updateItemController = wrapAsync(async(req,res) => {
+    if (itemIndex > -1) {
+        const productItem = cart.products[itemIndex];
+        console.log(productItem);
+        productItem.quantity -= 1;
+        cart.total -= productItem.productId.price;
+
+        if(productItem.quantity == 0){
+            cart.products.splice(itemIndex);
+        }
+
+        await cart.save();
+        return res.redirect('/api/cart');
+    } else {
+        return res.json( { error : 'Item Not Found'} );
+    }
+}
+
+exports.removeItemController =  async(req,res) => {
 
     const { productId } = req.params;
-    const { quantity } = req.body;
-    const cart = await Cart.findById(req.user._id);
-    if(!cart){
-        return res.status(400).json({
-            error: "Your cart has expired!",
-        });
-    }
-    const itemIndex = cart.products.findIndex(p => p._id == productId);
-    const productItem = cart.products[itemIndex];
-    productItem.quantity = quantity;
-    cart.products[itemIndex] = productItem;
-    cart = await cart.save();  
-})
+    const cart = await Cart.findOne({ userId : req.body.user._id }).populate('products.productId', 'name price');
+    
+    const itemIndex = cart.products.findIndex(p => p.productId._id == productId);
 
+    if (itemIndex > -1) {
+        
+        const productItem = cart.products[itemIndex];
+        cart.total -= (productItem.quantity * productItem.productId.price);
+        cart.products.splice(itemIndex);
+        await cart.save();
+        return res.redirect('/api/cart');
+    } else {
+        return res.json( { error : 'Item Not Found'} );
+    } 
+}
