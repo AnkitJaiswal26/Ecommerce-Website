@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "react-toastify": "^7.0.4",
     "slugify": "^1.6.0"
   }
 }
