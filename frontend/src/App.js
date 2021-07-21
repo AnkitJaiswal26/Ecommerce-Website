@@ -1,9 +1,10 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Register from "./pages/Register/Register";
-import Login from "./Screens/LoginScreen";
-import Home from "./Screens/HomeScreen";
-import ProductIndex from "./Screens/ProductIndexScreen";
+import Menu from "./pages/Menu/Menu";
+import Login from "./pages/Login/Login";
+import Landing from "./pages/Landing/Landing"
+// import { Menu } from "@material-ui/core";
 
 function App() {
 	return (
@@ -11,7 +12,7 @@ function App() {
 			<div>
 				<Switch>
 					<Route exact path="/productIndex">
-						<ProductIndex />
+						<Menu />
 					</Route>
 					<Route path="/login">
 						<Login />
@@ -20,7 +21,7 @@ function App() {
 						<Register />
 					</Route>
 					<Route path="/">
-						<Home />
+						<Landing />
 					</Route>
 				</Switch>
 			</div>
