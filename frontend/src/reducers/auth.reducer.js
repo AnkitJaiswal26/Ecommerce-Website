@@ -18,15 +18,14 @@ const initState = {
 export const authReducer = (state = initState, action) => {
 	switch (action.type) {
 		case authConstants.LOGIN_REQUEST:
-			state = {
+			return state = {
 				...state,
 				message: "",
 				error: null,
 				authenticating: true,
 			};
-			break;
 		case authConstants.LOGIN_SUCCESS:
-			state = {
+			return state = {
 				...state,
 				user: action.payload.user,
 				token: action.payload.token,
@@ -34,112 +33,94 @@ export const authReducer = (state = initState, action) => {
 				authenticating: false,
 				message: action.payload.message,
 			};
-			console.log("HiiByell");
-			break;
 		case authConstants.LOGOUT_REQUEST:
-			state = {
+			return state = {
 				...state,
 				error: null,
 				message: "",
 				loading: true,
 			};
-			break;
 		case authConstants.LOGOUT_SUCCESS:
-			state = {
+			return state = {
 				...initState,
 				message: action.payload.message,
 			};
-			break;
 		case authConstants.LOGOUT_FAILURE:
-			state = {
+			return state = {
 				...state,
 				error: action.payload.error,
 				loading: false,
 			};
-			break;
 		case authConstants.LOGIN_FAILURE:
-			state = {
+			return state = {
 				...state,
 				error: action.payload.error,
 				authenticating: false,
 			};
-			break;
 		case authConstants.REGISTER_REQUEST:
-			state = {
+			return state = {
 				...state,
 				error: null,
 				message: "",
 			};
-			break;
 		case authConstants.REGISTER_SUCCESS:
-			state = {
+			return state = {
 				...state,
 				message: action.payload.message,
 			};
-			break;
 		case authConstants.REGISTER_FAILURE:
-			state = {
+			return state = {
 				...state,
 				error: action.payload.error,
 			};
-			break;
 		case authConstants.ACTIVATION_REQUEST:
-			state = {
+			return state = {
 				...state,
 				message: "",
 				error: null,
 			};
-			break;
 		case authConstants.ACTIVATION_SUCCESS:
-			state = {
+			return state = {
 				...state,
 				message: action.payload.message,
 			};
-			break;
 		case authConstants.ACTIVATION_FAILURE:
-			state = {
+			return state = {
 				...state,
 				error: action.payload.error,
 			};
-			break;
 		case authConstants.FORGOT_PASSWORD_REQUEST:
-			state = {
+			return state = {
 				...state,
 				error: null,
 				message: "",
 			};
-			break;
 		case authConstants.FORGOT_PASSWORD_FAILURE:
-			state = {
+			return state = {
 				...state,
 				error: action.payload.error,
 			};
-			break;
 		case authConstants.FORGOT_PASSWORD_SUCCESS:
-			state = {
+			return state = {
 				...state,
 				message: action.payload.message,
 			};
-			break;
 		case authConstants.RESET_PASSWORD_REQUEST:
-			state = {
+			return state = {
 				...state,
 				error: null,
 				message: "",
 			};
-			break;
 		case authConstants.RESET_PASSWORD_FAILURE:
-			state = {
+			return state = {
 				...state,
 				error: action.payload.error,
 			};
-			break;
 		case authConstants.RESET_PASSWORD_SUCCESS:
 			state = {
 				...state,
 				message: action.payload.message,
 			};
-			break;
 		default:
 			return state;
 	}

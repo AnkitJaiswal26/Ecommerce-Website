@@ -7,6 +7,7 @@ import Activation from "./pages/Activation/Activation";
 import Login from "./pages/Login/Login";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import Menu from './pages/Menu/Menu';
 
 function App() {
 	return (
@@ -14,7 +15,7 @@ function App() {
 			<div>
 				<Switch>
 					<Route exact path="/productIndex">
-						<ProductIndex />
+						<Menu />
 					</Route>
 					<Route
 						path="/login"
