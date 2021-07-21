@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ITEMS, ADD_ITEM, DELETE_ITEM, UPDATE_ITEM, ITEMS_LOADING } from './constants';
+import { productContants } from './constants';
 import { returnErrors } from './errorActions';
 
 export const getItems = () => dispatch => {
@@ -7,7 +7,10 @@ export const getItems = () => dispatch => {
     axios.get('/api/products/')
         .then(res => dispatch({
             type: GET_ITEMS,
-            payload: res.data
+            payload: {
+                message: "Success!",
+                data:res.data,
+            }
         }))
         .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 }
@@ -18,7 +21,7 @@ export const addItem = (item) => (dispatch) => {
             type: ADD_ITEM,
             payload: res.data
         }))
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
+        .catch(err => dispatch({type:productContants.ADD_ITEM_FAILURE, payload:{message:"Unsuccessful addition...."}}))
 }
 
 export const deleteItem = (id) => (dispatch) => {
