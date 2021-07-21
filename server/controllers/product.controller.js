@@ -83,7 +83,6 @@ exports.getAllProductsController = (req, res) => {
 		.populate({ path: "category", select: "_id name" })
 		.exec((err, products) => {
 			console.log(products);
-
 			if (err) {
 				return res.status(400).json({
 					error: error,

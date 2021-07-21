@@ -7,7 +7,7 @@ export const register = (user) => {
 			type: authConstants.REGISTER_REQUEST,
 		});
 
-		const res = await axios.post("/register", {
+		const res = await axios.post("api/auth/register", {
 			...user,
 		});
 		if (res.status === 200) {

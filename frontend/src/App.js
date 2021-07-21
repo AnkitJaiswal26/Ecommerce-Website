@@ -8,13 +8,16 @@ import {
 import Register from "./Screens/RegisterScreen"
 import Login from "./Screens/LoginScreen"
 import Home from "./Screens/HomeScreen"
-import { render } from "react-dom";
+import ProductIndex from "./Screens/ProductIndexScreen";
 
 function App() {
 	return (
 	<Router>
       <div>
         <Switch>
+        <Route exact path="/productIndex">
+            <ProductIndex/>
+          </Route>
           <Route path="/login">
             <Login />
           </Route>
@@ -24,6 +27,7 @@ function App() {
           <Route path="/">
             <Home />
           </Route>
+
         </Switch>
       </div>
     </Router>
