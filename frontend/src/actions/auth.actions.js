@@ -7,27 +7,27 @@ export const register = (user) => {
 			type: authConstants.REGISTER_REQUEST,
 		});
 
-		const res = await axios.post("/auth/register", {
-			...user,
-		});
-		if (res.status === 200) {
-			dispatch({
-				type: authConstants.REGISTER_SUCCESS,
-				payload: {
-					message: res.data.message,
-				},
-			});
-		} else {
-			if (res.status === 400) {
-				const error = res.data.error;
+		axios
+			.post("/auth/register", {
+				...user,
+			})
+			.then((res) => {
+				dispatch({
+					type: authConstants.REGISTER_SUCCESS,
+					payload: {
+						message: res.data.message,
+					},
+				});
+			})
+			.catch((err) => {
+				const { data } = err.response;
 				dispatch({
 					type: authConstants.REGISTER_FAILURE,
 					payload: {
-						error,
+						error: data.error,
 					},
 				});
-			}
-		}
+			});
 	};
 };
 
@@ -90,6 +90,15 @@ export const login = (user) => {
 			});
 		}
 	};
+};
+
+export const isAuth = () => {
+	const token = localStorage.getItem("token");
+	if (token) {
+		const user = JSON.parse(localStorage.getItem("user"));
+		if (user) return true;
+	}
+	return false;
 };
 
 export const isUserLogggedIn = () => {
@@ -165,7 +174,7 @@ export const resetPassword = (resetPasswordLink, password) => {
 		dispatch({
 			type: authConstants.RESET_PASSWORD_REQUEST,
 		});
-		
+
 		const res = await axios.put("/auth/resetPassword", {
 			resetPasswordLink,
 			newPassword: password,

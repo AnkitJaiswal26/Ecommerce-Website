@@ -6,6 +6,7 @@ const initState = {
 		userName: "",
 		email: "",
 		profilePicture: "",
+		role: "",
 	},
 	authenticate: false,
 	authenticating: false,
@@ -19,8 +20,8 @@ export const authReducer = (state = initState, action) => {
 		case authConstants.LOGIN_REQUEST:
 			state = {
 				...state,
-                message: "",
-                error: null,
+				message: "",
+				error: null,
 				authenticating: true,
 			};
 			break;
@@ -37,15 +38,15 @@ export const authReducer = (state = initState, action) => {
 		case authConstants.LOGOUT_REQUEST:
 			state = {
 				...state,
-                error: null,
-                message: "",
+				error: null,
+				message: "",
 				loading: true,
 			};
 			break;
 		case authConstants.LOGOUT_SUCCESS:
 			state = {
 				...initState,
-                message: action.payload.message
+				message: action.payload.message,
 			};
 			break;
 		case authConstants.LOGOUT_FAILURE:
@@ -63,11 +64,11 @@ export const authReducer = (state = initState, action) => {
 			};
 			break;
 		case authConstants.REGISTER_REQUEST:
-            state = {
-                ...state,
-                error: null,
-                message: ""
-            }
+			state = {
+				...state,
+				error: null,
+				message: "",
+			};
 			break;
 		case authConstants.REGISTER_SUCCESS:
 			state = {
@@ -81,26 +82,27 @@ export const authReducer = (state = initState, action) => {
 				error: action.payload.error,
 			};
 			break;
-        case authConstants.ACTIVATION_REQUEST:
-            state = {
-                ...state,
-                message: "",
-                error: null
-            }
-            break;
-        case authConstants.ACTIVATION_SUCCESS:
-            state = {
-                ...state,
-                message: action.payload.message
-            }
-            break;
-        case authConstants.ACTIVATION_FAILURE:
-            state = {
-                ...state,
-                error: action.payload.error
-            }
-            break
+		case authConstants.ACTIVATION_REQUEST:
+			state = {
+				...state,
+				message: "",
+				error: null,
+			};
+			break;
+		case authConstants.ACTIVATION_SUCCESS:
+			state = {
+				...state,
+				message: action.payload.message,
+			};
+			break;
+		case authConstants.ACTIVATION_FAILURE:
+			state = {
+				...state,
+				error: action.payload.error,
+			};
+			break;
 		default:
-			return initState
+			return state;
 	}
+	return state;
 };
