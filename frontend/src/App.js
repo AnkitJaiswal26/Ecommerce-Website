@@ -1,8 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Register from "./pages/Register/Register";
-import Home from "./Screens/HomeScreen";
-import ProductIndex from "./Screens/ProductIndexScreen";
 import Activation from "./pages/Activation/Activation";
 import Login from "./pages/Login/Login";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
@@ -39,9 +37,6 @@ function App() {
 					/>
 					<Route path="/register" exact>
 						<Register />
-					</Route>
-					<Route path="/" exact>
-						<Home />
 					</Route>
 				</Switch>
 			</div>
