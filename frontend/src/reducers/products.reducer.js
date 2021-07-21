@@ -5,6 +5,7 @@ const initState = {
 	loading: false,
 	error: null,
 	message: "",
+    req_res : null
 };
 
 export const productReducer = (state=initState, action) => {
@@ -18,20 +19,19 @@ export const productReducer = (state=initState, action) => {
         case productContants.ADD_ITEMS:
             state={
                 ...state,
-                message: action.payload.message,
-                productList: action.payload.data
+                req_res: action.payload,
             }
-        case productContants.GET_ITEMS:
+        case productContants.DELETE_ITEM:
             state={
                 ...state,
-                message: action.payload.message,
-                productList: action.payload.data
+                req_res: action.payload
             }
-        case productContants.GET_ITEMS:
+        case productContants.UPDATE_ITEM:
             state={
                 ...state,
-                message: action.payload.message,
-                productList: action.payload.data
+                req_res: action.payload
             }
+        default:
+            return state;
     }
 }

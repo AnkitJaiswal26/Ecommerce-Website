@@ -66,7 +66,7 @@ exports.addProductController = (req, res) => {
 
 	product.save((err, product) => {
 		if (err) {
-			console.log("Hii");
+			console.log("Error!");
 			return res.status(400).json({ error: err });
 		}
 		if (product) {
