@@ -1,35 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const { upload } = require("../middlewares/storage.middleware");
-const { check } = require("express-validator");
+const wrapAsync = require("../utils/wrapAsync");
+
 const {
-	addItemController,
-	removeItemController,
-	updateItemController,
-	//cartExpiryController,
+	getCart,
+	addOneItemController,
+	removeOneItemController,
+	removeItemController
+
 } = require("../controllers/cart.controller");
 
-router.post(
-	"/",
-	[
-		check("name", "Name is required").notEmpty(),
-		check("price", "Price is required").notEmpty().isNumeric(),
-		check("desc", "Description is required").notEmpty(),
-		check("category", "Category is required").notEmpty(),
-		check("quantity", "Quantity is required").notEmpty().isNumeric(),
-	],
-	upload.array("productImage"),
-	addItemController
-);
+router.get("/", wrapAsync(getCart));
 
-router.put("/:productId", updateItemController);
+router.post( "/:productId", wrapAsync(addOneItemController))
+	.delete("/:productId", wrapAsync(removeOneItemController));
 
-// router.get("/all", getAllProductsController);
-
-// router.get("/", getProductByIdController);
-
-router.delete("/:productId", removeItemController);
-
-// router.get("/:categorySlug/:productSlug", getProductBySlugController);
+router.delete("/entire/:productId", wrapAsync(removeItemController));
 
 module.exports = router;
