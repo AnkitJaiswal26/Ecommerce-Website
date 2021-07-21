@@ -1,4 +1,4 @@
-import {productContants} from '../actions/constants'
+import {productConstants} from "../actions/constants"
 
 const initState = {
     productList:[],
@@ -10,27 +10,31 @@ const initState = {
 
 export const productReducer = (state=initState, action) => {
     switch (action.type) {
-        case productContants.GET_ITEMS:
+        case productConstants.GET_ITEMS:
             state={
                 ...state,
                 message: action.payload.message,
                 productList: action.payload.data
             }
-        case productContants.ADD_ITEMS:
+            break;
+        case productConstants.ADD_ITEMS:
             state={
                 ...state,
                 req_res: action.payload,
             }
-        case productContants.DELETE_ITEM:
+            break;
+        case productConstants.DELETE_ITEM:
             state={
                 ...state,
                 req_res: action.payload
             }
-        case productContants.UPDATE_ITEM:
+            break;
+        case productConstants.UPDATE_ITEM:
             state={
                 ...state,
                 req_res: action.payload
             }
+            break;
         default:
             return state;
     }

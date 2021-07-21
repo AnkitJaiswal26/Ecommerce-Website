@@ -3,6 +3,7 @@ import { useHistory, Link } from 'react-router-dom';
 import store from '../store'
 import { Container, Typography, Button, TextField } from "@material-ui/core/";
 import { register } from '../actions/auth.actions';
+import {useDispatch} from 'react-redux'
 
 const styles = {
     main_container: {
@@ -33,6 +34,7 @@ const Register = () => {
     const history = useHistory();
     const [loggedIn, setLoggedIn] = useState(false);
     const state = store.getState();
+    const dispatch = useDispatch();
 
 
     const checkAuth = () => {
@@ -67,21 +69,22 @@ const Register = () => {
         setPwd(e.target.value);
     };
 
-    const signUp = (username, email, password) => {
+    const signUp = async(username, email, password) => {
         //TODO: IMPLEMENT REGISTER
-        register({
+        const res = await dispatch(register({
             "username":username,
             "email":email,
-            "password":password
-        })
+            "password": password,
+        }));
+        console.log(res)
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async(e) => {
         e.preventDefault();
         try {
             setError("");
             setErrorOccurred(false);
-            signUp(username, email, pwd);
+            await signUp(username, email, pwd);
             console.log("Signed up!");
             routeChange();
         } catch (error) {
