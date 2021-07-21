@@ -7,7 +7,7 @@ export const register = (user) => {
 			type: authConstants.REGISTER_REQUEST,
 		});
 
-		const res = await axios.post("api/auth/register", {
+		const res = await axios.post("/auth/register", {
 			...user,
 		});
 		if (res.status === 200) {
@@ -37,7 +37,7 @@ export const activation = (token) => {
 			type: authConstants.ACTIVATION_REQUEST,
 		});
 
-		const res = await axios.post("/activation", token);
+		const res = await axios.post("/auth/activation", token);
 
 		if (res.status === 200) {
 			dispatch({
@@ -65,7 +65,7 @@ export const login = (user) => {
 		dispatch({
 			type: authConstants.LOGIN_REQUEST,
 		});
-		const res = await axios.post(`/login`, {
+		const res = await axios.post(`/auth/login`, {
 			...user,
 		});
 
@@ -143,7 +143,7 @@ export const forgotPassword = (email) => {
 				},
 			});
 		}
-		const res = await axios.put("/forgotPassword", email);
+		const res = await axios.put("/auth/forgotPassword", email);
 		if (res.status === 200) {
 			dispatch({
 				type: authConstants.FORGOT_PASSWORD_SUCCESS,
@@ -166,7 +166,7 @@ export const resetPassword = (resetPasswordLink, password) => {
 			type: authConstants.RESET_PASSWORD_REQUEST,
 		});
 		
-		const res = await axios.post("/resetPassword", {
+		const res = await axios.put("/auth/resetPassword", {
 			resetPasswordLink,
 			newPassword: password,
 		});

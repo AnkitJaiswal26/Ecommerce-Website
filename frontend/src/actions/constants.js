@@ -24,7 +24,7 @@ export const authConstants = {
 	ITEMS_LOADING: "ITEMS_LOADING"
 };
 
-export const productContants = {
+export const productConstants = {
 	GET_ITEMS: "GET_ITEMS",
 	ADD_ITEM: "ADD_ITEMS",
 	DELETE_ITEM: "DELETE_ITEM",
