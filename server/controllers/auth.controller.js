@@ -18,7 +18,7 @@ exports.registerController = (req, res) => {
   if (!errors.isEmpty()) {
     const firstError = errors.array().map((error) => error.msg)[0];
     return res.status(400).json({
-      erros: firstError,
+      error: firstError,
     });
   } else {
     User.findOne({
