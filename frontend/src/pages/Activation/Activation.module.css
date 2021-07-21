@@ -54,43 +54,9 @@
 	margin-bottom: 20px;
 }
 
-.inputContainer {
-	width: 100%;
-	margin-bottom: 10px;
-}
-
-.inputLabel {
-	font-size: 0.875rem;
-	color: #555;
-	font-weight: 600;
-	padding: 0;
-	margin: 0;
-}
-
-.input {
-	width: 100%;
-}
-
-.forgot {
-	font-size: 0.875rem;
-	color: rgba(99, 102, 241, 1);
-	font-weight: 600;
-	padding: 0;
-	margin: 0;
-}
-
-.already{
-    font-size: 1rem;
-	color: #555;
-    font-weight: 400;
-	margin-top: 20px;
-}
-
-.alreadyLink{
-    font-size: 1rem;
-	color: rgb(99, 102, 241);
-	font-weight: 600;
-	margin-top: 20px;
+.heading span{
+    font-size: 18px;
+    font-weight: 500;
 }
 
 @media (max-width: 1050px) {

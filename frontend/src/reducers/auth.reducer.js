@@ -34,6 +34,7 @@ export const authReducer = (state = initState, action) => {
 				authenticating: false,
 				message: action.payload.message,
 			};
+			console.log("HiiByell");
 			break;
 		case authConstants.LOGOUT_REQUEST:
 			state = {
@@ -99,6 +100,44 @@ export const authReducer = (state = initState, action) => {
 			state = {
 				...state,
 				error: action.payload.error,
+			};
+			break;
+		case authConstants.FORGOT_PASSWORD_REQUEST:
+			state = {
+				...state,
+				error: null,
+				message: "",
+			};
+			break;
+		case authConstants.FORGOT_PASSWORD_FAILURE:
+			state = {
+				...state,
+				error: action.payload.error,
+			};
+			break;
+		case authConstants.FORGOT_PASSWORD_SUCCESS:
+			state = {
+				...state,
+				message: action.payload.message,
+			};
+			break;
+		case authConstants.RESET_PASSWORD_REQUEST:
+			state = {
+				...state,
+				error: null,
+				message: "",
+			};
+			break;
+		case authConstants.RESET_PASSWORD_FAILURE:
+			state = {
+				...state,
+				error: action.payload.error,
+			};
+			break;
+		case authConstants.RESET_PASSWORD_SUCCESS:
+			state = {
+				...state,
+				message: action.payload.message,
 			};
 			break;
 		default:

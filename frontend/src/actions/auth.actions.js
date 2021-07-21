@@ -37,26 +37,27 @@ export const activation = (token) => {
 			type: authConstants.ACTIVATION_REQUEST,
 		});
 
-		const res = await axios.post("/auth/activation", token);
-
-		if (res.status === 200) {
-			dispatch({
-				type: authConstants.ACTIVATION_SUCCESS,
-				payload: {
-					message: res.data.message,
-				},
-			});
-		} else {
-			if (res.status === 400) {
-				const error = res.data.error;
+		axios
+			.post("/auth/activation", {
+				token: token,
+			})
+			.then((res) => {
+				dispatch({
+					type: authConstants.ACTIVATION_SUCCESS,
+					payload: {
+						message: res.data.message,
+					},
+				});
+			})
+			.catch((err) => {
+				const { data } = err.response;
 				dispatch({
 					type: authConstants.ACTIVATION_FAILURE,
 					payload: {
-						error,
+						error: data.error,
 					},
 				});
-			}
-		}
+			});
 	};
 };
 
@@ -65,30 +66,32 @@ export const login = (user) => {
 		dispatch({
 			type: authConstants.LOGIN_REQUEST,
 		});
-		const res = await axios.post(`/auth/login`, {
-			...user,
-		});
-
-		if (res.status === 200) {
-			const { token, user } = res.data;
-			localStorage.setItem("token", token);
-			localStorage.setItem("user", JSON.stringify(user));
-			dispatch({
-				type: authConstants.LOGIN_SUCCESS,
-				payload: {
-					token,
-					user,
-					message: "Login Successful",
-				},
+		axios
+			.post(`/auth/login`, {
+				...user,
+			})
+			.then((res) => {
+				const { token, user } = res.data;
+				localStorage.setItem("token", token);
+				localStorage.setItem("user", JSON.stringify(user));
+				dispatch({
+					type: authConstants.LOGIN_SUCCESS,
+					payload: {
+						token,
+						user,
+						message: "Login Successful",
+					},
+				});
+			})
+			.catch((err) => {
+				const { data } = err.response;
+				dispatch({
+					type: authConstants.LOGIN_FAILURE,
+					payload: {
+						error: data.error,
+					},
+				});
 			});
-		} else if (res.status === 400) {
-			dispatch({
-				type: authConstants.LOGIN_FAILURE,
-				payload: {
-					error: res.data.error,
-				},
-			});
-		}
 	};
 };
 
@@ -144,67 +147,84 @@ export const forgotPassword = (email) => {
 		dispatch({
 			type: authConstants.FORGOT_PASSWORD_REQUEST,
 		});
-		if (isUserLogggedIn()) {
-			dispatch({
-				type: authConstants.FORGOT_PASSWORD_FAILURE,
-				payload: {
-					error: "User Already Logged In",
-				},
-			});
-		}
-		const res = await axios.put("/auth/forgotPassword", email);
-		if (res.status === 200) {
-			dispatch({
-				type: authConstants.FORGOT_PASSWORD_SUCCESS,
-				message: res.data.message,
-			});
-		} else {
-			if (res.status === 400) {
+
+		// TODO: First implement logout page and then uncomment this
+		// if (isUserLogggedIn()) {
+		// 	dispatch({
+		// 		type: authConstants.FORGOT_PASSWORD_FAILURE,
+		// 		payload: {
+		// 			error: "User Already Logged In",
+		// 		},
+		// 	});
+		// }
+
+		axios
+			.put("/auth/forgotPassword", {
+				email,
+			})
+			.then((res) => {
+				const { message } = res.data;
+				console.log(message);
+				dispatch({
+					type: authConstants.FORGOT_PASSWORD_SUCCESS,
+					payload: {
+						message: message,
+					},
+				});
+			})
+			.catch((error) => {
+				console.log("Hiii");
 				dispatch({
 					type: authConstants.FORGOT_PASSWORD_FAILURE,
-					error: res.data.error,
+					payload: {
+						error: error.response.data.error,
+					},
 				});
-			}
-		}
+			});
 	};
 };
 
 export const resetPassword = (resetPasswordLink, password) => {
+
+	console.log(resetPasswordLink)
+	console.log("----------------------------")
+	console.log(password)
 	return async (dispatch) => {
 		dispatch({
 			type: authConstants.RESET_PASSWORD_REQUEST,
 		});
 
-		const res = await axios.put("/auth/resetPassword", {
-			resetPasswordLink,
-			newPassword: password,
-		});
+		// TODO: First implement logout page and then uncomment this
+		// if (isUserLogggedIn()) {
+		// 	dispatch({
+		// 		type: authConstants.FORGOT_PASSWORD_FAILURE,
+		// 		payload: {
+		// 			error: "User Already Logged In",
+		// 		},
+		// 	});
+		// }
 
-		if (isUserLogggedIn()) {
-			dispatch({
-				type: authConstants.FORGOT_PASSWORD_FAILURE,
-				payload: {
-					error: "User Already Logged In",
-				},
-			});
-		}
-
-		if (res.status === 200) {
-			dispatch({
-				type: authConstants.RESET_PASSWORD_SUCCESS,
-				payload: {
-					message: res.data.message,
-				},
-			});
-		} else {
-			if (res.status === 400) {
+		axios
+			.put("/auth/resetPassword", {
+				resetPasswordLink,
+				newPassword: password,
+			})
+			.then((res) => {
+				dispatch({
+					type: authConstants.RESET_PASSWORD_SUCCESS,
+					payload: {
+						message: res.data.message,
+					},
+				});
+			})
+			.catch((err) => {
+				const { data } = err.response;
 				dispatch({
 					type: authConstants.RESET_PASSWORD_FAILURE,
 					payload: {
-						error: res.data.error,
+						error: data.error,
 					},
 				});
-			}
-		}
+			});
 	};
 };
