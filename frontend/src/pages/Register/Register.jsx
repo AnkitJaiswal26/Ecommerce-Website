@@ -14,9 +14,9 @@ const Register = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	const routeChange = () => {
-		let path = `login`;
-		history.push(path);
+	const routeChange = (path) => {
+		let _path = path;
+		history.push(_path);
 	};
 
 	const [email, setEmail] = useState("");
@@ -51,6 +51,7 @@ const Register = () => {
 		try {
 			setError("");
 			signUp(username, email, password, role);
+      routeChange('productIndex');
 		} catch (error) {
 			setError(error);
 		}
