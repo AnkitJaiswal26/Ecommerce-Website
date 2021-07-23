@@ -25,7 +25,7 @@ const Login = () => {
 	useEffect(() => {
 		setError(store.getState().auth.error);
 		setMessage(store.getState().auth.message);
-
+		console.log(store);
 		if (message) toast.success(message);
 		if (store.getState().auth.error) toast.error(error);
 	}, [store.getState().auth.error]);
@@ -52,7 +52,7 @@ const Login = () => {
 
 	return (
 		<>
-			{isAuth() ? <Redirect to="/productIndex" /> : null}
+			{state.auth.user.email === "" ? <Redirect to="/productIndex" /> : null}
 			<ToastContainer />
 			<div
 				className={`w-full h-screen flex justify-center items-center ${styles.wrapper}`}

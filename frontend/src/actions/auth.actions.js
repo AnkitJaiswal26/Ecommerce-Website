@@ -96,6 +96,7 @@ export const login = (user) => {
 	};
 };
 
+//TODO: USER CAN BE NOT NULL EVEN IF EMAIL IS "".
 export const isAuth = () => {
 	const token = localStorage.getItem("token");
 	if (token) {
