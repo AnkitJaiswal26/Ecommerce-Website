@@ -10,11 +10,8 @@ const Menu = () => {
     const routeChange = (path) => {
         history.push(path);
     }
+
     useEffect(() => {
-        // if (state.auth.user.email == "") {
-        //     routeChange('login');
-        //     return;
-        // }
         console.log(state.auth.user.email);
     }, [state])
     console.log(state)

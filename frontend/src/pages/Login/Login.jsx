@@ -45,6 +45,7 @@ const Login = () => {
 			setError("");
 			logIn(email, password);
 			if(isAuth()) console.log("Logged In");
+			routeChange('productIndex');
 		} catch (error) {
 			setError(error);
 		}
@@ -52,7 +53,7 @@ const Login = () => {
 
 	return (
 		<>
-			{state.auth.user.email === "" ? <Redirect to="/productIndex" /> : null}
+			{state.auth.user.email !== "" ? <Redirect to="/productIndex" /> : null}
 			<ToastContainer />
 			<div
 				className={`w-full h-screen flex justify-center items-center ${styles.wrapper}`}
