@@ -49,7 +49,7 @@ const Login = () => {
 
 	return (
 		<>
-			{data.user.email === "" ? <Redirect to="/productIndex" /> : null}
+			{isAuth() ? <Redirect to="/productIndex" /> : null}
 			<ToastContainer />
 			<div
 				className={`w-full h-screen flex justify-center items-center ${styles.wrapper}`}
