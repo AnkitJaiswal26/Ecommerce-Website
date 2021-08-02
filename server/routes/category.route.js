@@ -17,8 +17,7 @@ router.post(
 );
 
 router.delete(
-	"/",
-	[check("name", "Category Name is required").notEmpty()],
+	"/:id",
 	deleteCategoryController
 );
 

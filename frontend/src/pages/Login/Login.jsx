@@ -5,11 +5,11 @@ import { useDispatch } from "react-redux";
 import styles from "./Login.module.css";
 import store from "../../store";
 import { isAuth, login } from "../../actions/auth.actions";
+import {useSelector} from 'react-redux';
 
 const Login = () => {
     const dispatch = useDispatch();
 	const history = useHistory();
-	const state = store.getState();
 
 	const routeChange = () => {
 		let path = `productIndex`;
@@ -20,15 +20,12 @@ const Login = () => {
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 	const [message, setMessage] = useState("");
+	const data = useSelector((state) => state.auth);
 
-	// TODO: Make this useeffect work. THis is not working properly.
 	useEffect(() => {
-		setError(store.getState().auth.error);
-		setMessage(store.getState().auth.message);
-		console.log(store);
-		if (message) toast.success(message);
-		if (store.getState().auth.error) toast.error(error);
-	}, [store.getState().auth.error]);
+		if (data.message) toast.success(data.message);
+		if (data.error) toast.error(data.error);
+	}, [data]);
 
 	const logIn = async (email, password) => {
 		await dispatch(
@@ -45,7 +42,6 @@ const Login = () => {
 			setError("");
 			logIn(email, password);
 			if(isAuth()) console.log("Logged In");
-			routeChange('productIndex');
 		} catch (error) {
 			setError(error);
 		}
@@ -53,7 +49,7 @@ const Login = () => {
 
 	return (
 		<>
-			{state.auth.user.email !== "" ? <Redirect to="/productIndex" /> : null}
+			{data.user.email === "" ? <Redirect to="/productIndex" /> : null}
 			<ToastContainer />
 			<div
 				className={`w-full h-screen flex justify-center items-center ${styles.wrapper}`}

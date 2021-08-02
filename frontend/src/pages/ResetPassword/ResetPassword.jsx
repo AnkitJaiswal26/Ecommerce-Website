@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, Link, Redirect } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { jwt } from "jsonwebtoken";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./ResetPassword.module.css";
 import store from "../../store";
 import { isAuth, resetPassword } from "../../actions/auth.actions";
@@ -10,15 +9,16 @@ import { isAuth, resetPassword } from "../../actions/auth.actions";
 const ResetPassword = ({ match }) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const data = useSelector(state => state.auth);
 
 	const routeChange = () => {
 		let path = `login`;
 		history.push(path);
 	};
+
 	const [token, setToken] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
-	const [message, setMessage] = useState("");
 
 	useEffect(() => {
 		let token = match.params.token;
@@ -28,14 +28,10 @@ const ResetPassword = ({ match }) => {
 		// eslint-disable-next-line
 	}, [match.params]);
 
-	// TODO: Make this useeffect work. THis is not working properly.
 	useEffect(() => {
-		setError(store.getState().auth.error);
-		setMessage(store.getState().auth.message);
-
-		if (message) toast.success(message);
-		if (store.getState().auth.error) toast.error(error);
-	}, [store.getState().auth]);
+		if (data.message) toast.success(data.message);
+		if (data.error) toast.error(data.error);
+	}, [data]);
 
 	const reset = async (token, password) => {
 		await dispatch(

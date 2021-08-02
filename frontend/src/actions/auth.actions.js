@@ -2,7 +2,6 @@ import { authConstants } from "./constants";
 import axios from "../helpers/axios";
 
 export const register = (user) => {
-	console.log(user);
 	return async (dispatch) => {
 		dispatch({
 			type: authConstants.REGISTER_REQUEST,

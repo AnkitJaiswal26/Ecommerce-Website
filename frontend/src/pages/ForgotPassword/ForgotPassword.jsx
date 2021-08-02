@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./ForgotPassword.module.css";
 import store from "../../store";
 import { isAuth, forgotPassword } from "../../actions/auth.actions";
@@ -13,14 +13,14 @@ const ForgotPassword = () => {
 	const [error, setError] = useState("");
 	const [message, setMessage] = useState("");
 
+	const data = useSelector(state => state.auth);
+
+
 	// TODO: Make this useeffect work. THis is not working properly.
 	useEffect(() => {
-		setError(store.getState().auth.error);
-		setMessage(store.getState().auth.message);
-
-		if (message) toast.success(message);
-		if (store.getState().auth.error) toast.error(error);
-	}, [store.getState().auth.error]);
+		if (data.message) toast.success(data.message);
+		if (data.error) toast.error(data.error);
+	}, [data]);
 
 	const onSubmit = (e) => {
 		e.preventDefault();

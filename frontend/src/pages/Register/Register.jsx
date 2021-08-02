@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, Link, Redirect } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./Register.module.css";
 import store from "../../store";
-import {
-	colors,
-} from "@material-ui/core/";
+import { colors } from "@material-ui/core/";
 import Select from "react-select";
 import { isAuth, register } from "../../actions/auth.actions";
 
@@ -23,17 +21,16 @@ const Register = () => {
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
 	const [role, setRole] = useState("customer");
-	const [error, setError] = useState("");
-	const [message, setMessage] = useState("");
-	
-	// TODO: Make this useeffect work. THis is not working properly.
-	useEffect(() => {
-		setError(store.getState().auth.error);
-		setMessage(store.getState().auth.message);
+	const [error, setError] = useState(null);
+	const data = useSelector((state) => state.auth);
 
-		if (message) toast.success(message);
-		if (store.getState().auth.error) toast.error(error);
-	}, [store.getState().auth]);
+	// TODO: Make this useeffect work. THis is not working properly.
+
+	useEffect(() => {
+		console.log("Hii");
+		if (data.error) toast.error(data.error);
+		if (data.message) toast.success(data.message);
+	}, [data.error, data.message]);
 
 	const signUp = async (username, email, password, role = "customer") => {
 		await dispatch(
@@ -51,7 +48,6 @@ const Register = () => {
 		try {
 			setError("");
 			signUp(username, email, password, role);
-      routeChange('productIndex');
 		} catch (error) {
 			setError(error);
 		}

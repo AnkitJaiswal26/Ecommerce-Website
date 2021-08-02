@@ -20,7 +20,7 @@ exports.addCategoryController = (req, res) => {
 		}).exec((err, category) => {
 			if (category) {
 				return res.status(400).json({
-					errors: "Category already exists",
+					error: "Category already exists",
 				});
 			}
 			if (req.body.parentId) {
@@ -51,7 +51,8 @@ exports.addCategoryController = (req, res) => {
 						});
 					}
 					return res.status(200).json({
-						category: category,
+						message: "New Category Added Successfully!",
+						category,
 					});
 				});
 			}
@@ -60,25 +61,17 @@ exports.addCategoryController = (req, res) => {
 };
 
 exports.deleteCategoryController = (req, res) => {
-	const errors = validationResult(req);
-	if (!errors.isEmpty()) {
-		const firstError = errors.array().map((error) => error.msg)[0];
-		return res.status(400).json({
-			error: firstError,
-		});
-	} else {
-		const { name } = req.body;
-		Category.findOneAndDelete({ name: name }).exec((err, msg) => {
-			if (err) {
-				return res.status(400).json({
-					error: error,
-				});
-			}
+	const { id } = req.params;
+	Category.findOneAndDelete({ _id: id }).exec((err, msg) => {
+		if (err) {
 			return res.status(400).json({
-				message: "Category Deleted",
+				error: error,
 			});
+		}
+		return res.status(400).json({
+			message: "Category Deleted!",
 		});
-	}
+	});
 };
 
 function createCategories(categories, parentId = null) {
@@ -106,7 +99,10 @@ function createCategories(categories, parentId = null) {
 
 exports.getAllCategoryController = (req, res) => {
 	Category.find({}).exec((error, categories) => {
-		if (error) return res.status(400).json({ error });
+		if (error)
+			return res.status(400).json({
+				error: error,
+			});
 		if (categories) {
 			const categoryList = createCategories(categories);
 			res.status(200).json({
