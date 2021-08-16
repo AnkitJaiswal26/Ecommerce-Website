@@ -4,28 +4,42 @@ import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import store from "../../store/index";
 import {useSelector} from 'react-redux'
+import {getItems} from '../../actions/products.action'
 
 const Menu = () => {
-    const data = useSelector((state) => state.auth);
+    const data = useSelector((state) => state);
+    // const products = useSelector((state) => state.products);
     const history = useHistory();
+    const dispatch = useDispatch()
     // const state = store.getState();
     const routeChange = (path) => {
         history.push(path);
     }
 
     useEffect(() => {
-        console.log(data);
+        dispatch(getItems());
+        // setProductList(data.products.productList);
+        // console.log(data);
+        // console.log(productList);
     }, [data])
-
+    const [productList, setProductList] = useState([...data.products.productList]);
+    console.log(productList)
+    // console.log(productList)
     useEffect(() => {
-        console.log("Hello")
-        console.log(data)
-        
-    }, [data])
-    // console.log(state)
+        // setProductList(data.products.productList);
+    })
+    
     return (
         <div>
-            <h1>Menu</h1>
+            <h1>Hello</h1>
+            {/* <h2>{productList[0].name}</h2> */}
+            <ul>
+            {
+                productList.map((prod) => {
+                    return (<li>{prod.name}</li>)
+                })
+            }
+            </ul>
         </div>
     )
 }

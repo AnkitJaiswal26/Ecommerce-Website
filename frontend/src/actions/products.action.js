@@ -1,23 +1,28 @@
-import axios from "axios";
+import axios from "../helpers/axios";
 import { productConstants } from "./constants";
-import { returnErrors } from "./errorActions";
+// import { returnErrors } from "./errorActions";
 
 export const getItems = () => (dispatch) => {
 	dispatch(setItemsLoading());
+	// console.log("Hi from actions")
 	axios
-		.get("/api/products/")
+		.get("product/all")
 		.then((res) =>
-			dispatch({
+			{
+				// console.log("Hi from actions");
+				// console.log(res.data)
+				dispatch({
 				type: productConstants.GET_ITEMS,
 				payload: {
 					message: "Success!",
-					data: res.data,
+					data: res.data.products,
 				},
-			})
+			})}
 		)
-		.catch((err) =>
-			dispatch(returnErrors(err.response.data, err.response.status))
-		);
+		// .catch((err) =>
+		// 	dispatch(returnErrors(err.response.data, err.response.status))
+		// );
+
 };
 
 export const addItem = (item) => (dispatch) => {
@@ -37,19 +42,19 @@ export const addItem = (item) => (dispatch) => {
 		);
 };
 
-export const deleteItem = (id) => (dispatch) => {
-	axios
-		.delete(`/api/products/${id}`)
-		.then((res) =>
-			dispatch({
-				type: productConstants.DELETE_ITEM,
-				payload: id,
-			})
-		)
-		.catch((err) =>
-			dispatch(returnErrors(err.response.data, err.response.status))
-		);
-};
+// export const deleteItem = (id) => (dispatch) => {
+// 	axios
+// 		.delete(`/api/products/${id}`)
+// 		.then((res) =>
+// 			dispatch({
+// 				type: productConstants.DELETE_ITEM,
+// 				payload: id,
+// 			})
+// 		)
+// 		.catch((err) =>
+// 			dispatch(returnErrors(err.response.data, err.response.status))
+// 		);
+// };
 
 export const updateItem = (id, item) => (dispatch) => {
 	axios
@@ -60,9 +65,9 @@ export const updateItem = (id, item) => (dispatch) => {
 				payload: Promise.all([id, res.data]),
 			})
 		)
-		.catch((err) =>
-			dispatch(returnErrors(err.response.data, err.response.status))
-		);
+		// .catch((err) =>
+		// 	dispatch(returnErrors(err.response.data, err.response.status))
+		// );
 };
 
 export const setItemsLoading = () => {

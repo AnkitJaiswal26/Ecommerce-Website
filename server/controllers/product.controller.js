@@ -76,7 +76,7 @@ exports.addProductController = (req, res) => {
 };
 
 exports.getAllProductsController = (req, res) => {
-	Product.find({ createdBy: req.body.userId })
+	Product.find()
 		.select(
 			"_id name price quantity slug description productImages category"
 		)
@@ -140,12 +140,14 @@ exports.getProductBySlugController = (req, res) => {
 				error: "No Product found!",
 			});
 		}
-		if (category) {
-			console.log(category);
+		if (category.length !== 0) {
+			console.log(category[0]._id)
+			console.log(category[0]);
 			Product.find({
 				slug: productSlug,
-				category: category._id,
+				category: category[0]._id,
 			}).exec((err, product) => {
+				console.log(product)
 				if (err) {
 					return res.status(400).json({
 						error: "No Product found!",
