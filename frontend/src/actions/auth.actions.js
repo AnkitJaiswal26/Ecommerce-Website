@@ -96,10 +96,11 @@ export const login = (user) => {
 };
 
 //TODO: USER CAN BE NOT NULL EVEN IF EMAIL IS "".
-export const isAuth = () => {
-	const token = localStorage.getItem("token");
+export const isAuth = (_auth) => {
+	// const token = localStorage.getItem("token");
+	const {token, user} = _auth;
 	if (token) {
-		const user = JSON.parse(localStorage.getItem("user"));
+		// const user = JSON.parse(localStorage.getItem("user"));
 		if (user) return true;
 	}
 	return false;

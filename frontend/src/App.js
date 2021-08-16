@@ -6,6 +6,7 @@ import Login from "./pages/Login/Login";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Menu from './pages/Menu/Menu';
+import Product from './pages/Product/Product';
 
 function App() {
 	return (
@@ -15,10 +16,16 @@ function App() {
 					<Route exact path="/productIndex">
 						<Menu />
 					</Route>
+
 					<Route
 						path="/login"
 						exact
 						render={(props) => <Login {...props} />}
+					/>
+					<Route
+						path="/product/:categorySlug/:productSlug"
+						exact
+						render={(props) => <Product {...props}/>}
 					/>
 					<Route
 						path="/users/activate/:token"

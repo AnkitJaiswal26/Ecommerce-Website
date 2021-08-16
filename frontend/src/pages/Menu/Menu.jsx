@@ -36,7 +36,16 @@ const Menu = () => {
             <ul>
             {
                 productList.map((prod) => {
-                    return (<li>{prod.name}</li>)
+                    return (
+                        
+                        <li>
+                            
+                                {prod.name}
+                        
+                            
+                        </li>
+                        
+                        )
                 })
             }
             </ul>
