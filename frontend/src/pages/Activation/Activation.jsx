@@ -55,7 +55,7 @@ const Activation = ({ match }) => {
 
 	return (
 		<>
-			{isAuth() ? <Redirect to="/productIndex" /> : null}
+			{isAuth() ? <Redirect to="/" /> : null}
 			<ToastContainer />
 			<div
 				className={`w-full h-screen flex justify-center items-center ${styles.wrapper}`}

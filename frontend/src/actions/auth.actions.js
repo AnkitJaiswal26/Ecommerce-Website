@@ -1,5 +1,8 @@
 import { authConstants } from "./constants";
 import axios from "../helpers/axios";
+import { toast } from "react-toastify";
+import { createBrowserHistory } from "history";
+import { Redirect } from "react-router";
 
 export const register = (user) => {
 	return async (dispatch) => {
@@ -21,11 +24,9 @@ export const register = (user) => {
 			})
 			.catch((err) => {
 				const { data } = err.response;
+				toast.error(data.error);
 				dispatch({
 					type: authConstants.REGISTER_FAILURE,
-					payload: {
-						error: data.error,
-					},
 				});
 			});
 	};
@@ -42,20 +43,18 @@ export const activation = (token) => {
 				token: token,
 			})
 			.then((res) => {
+				const history = createBrowserHistory();
+				toast.success(res.data.message);
+				history.push("login");
 				dispatch({
 					type: authConstants.ACTIVATION_SUCCESS,
-					payload: {
-						message: res.data.message,
-					},
 				});
 			})
 			.catch((err) => {
 				const { data } = err.response;
+				toast.error(data.error);
 				dispatch({
 					type: authConstants.ACTIVATION_FAILURE,
-					payload: {
-						error: data.error,
-					},
 				});
 			});
 	};
@@ -74,31 +73,30 @@ export const login = (user) => {
 				const { token, user } = res.data;
 				localStorage.setItem("token", token);
 				localStorage.setItem("user", JSON.stringify(user));
+				toast.success("Login Successfully!");
+
 				dispatch({
 					type: authConstants.LOGIN_SUCCESS,
 					payload: {
 						token,
 						user,
-						message: "Login Successful",
 					},
 				});
 			})
 			.catch((err) => {
+				console.log(err);
 				const { data } = err.response;
+				toast.error(data.error);
 				dispatch({
 					type: authConstants.LOGIN_FAILURE,
-					payload: {
-						error: data.error,
-					},
 				});
 			});
 	};
 };
 
 //TODO: USER CAN BE NOT NULL EVEN IF EMAIL IS "".
-export const isAuth = (_auth) => {
+export const isAuth = () => {
 	const token = localStorage.getItem("token");
-	// const {token, user} = _auth;
 	if (token) {
 		const user = JSON.parse(localStorage.getItem("user"));
 		if (user) return true;
@@ -119,11 +117,9 @@ export const isUserLogggedIn = () => {
 				},
 			});
 		} else {
+			toast.error("Failed to login!");
 			dispatch({
 				type: authConstants.LOGIN_FAILURE,
-				payload: {
-					error: "Failed to Login!",
-				},
 			});
 		}
 	};
@@ -135,11 +131,9 @@ export const logout = () => {
 			type: authConstants.LOGOUT_REQUEST,
 		});
 		localStorage.clear();
+		toast.success("Logout Successfully!");
 		dispatch({
 			type: authConstants.LOGOUT_SUCCESS,
-			payload: {
-				message: "Logout Successful",
-			},
 		});
 	};
 };
@@ -150,15 +144,15 @@ export const forgotPassword = (email) => {
 			type: authConstants.FORGOT_PASSWORD_REQUEST,
 		});
 
-		// TODO: First implement logout page and then uncomment this
-		// if (isUserLogggedIn()) {
-		// 	dispatch({
-		// 		type: authConstants.FORGOT_PASSWORD_FAILURE,
-		// 		payload: {
-		// 			error: "User Already Logged In",
-		// 		},
-		// 	});
-		// }
+		if (isAuth()) {
+			toast.error("User Already Logged In");
+			dispatch({
+				type: authConstants.FORGOT_PASSWORD_FAILURE,
+			});
+			const history = createBrowserHistory();
+			history.push("/");
+			window.location.reload();
+		}
 
 		axios
 			.put("/auth/forgotPassword", {
@@ -166,45 +160,34 @@ export const forgotPassword = (email) => {
 			})
 			.then((res) => {
 				const { message } = res.data;
-				console.log(message);
+				toast.success(message);
 				dispatch({
 					type: authConstants.FORGOT_PASSWORD_SUCCESS,
-					payload: {
-						message: message,
-					},
 				});
 			})
 			.catch((error) => {
-				console.log("Hiii");
+				toast.error(error.response.data.error);
 				dispatch({
 					type: authConstants.FORGOT_PASSWORD_FAILURE,
-					payload: {
-						error: error.response.data.error,
-					},
 				});
 			});
 	};
 };
 
 export const resetPassword = (resetPasswordLink, password) => {
-
-	console.log(resetPasswordLink)
-	console.log("----------------------------")
-	console.log(password)
 	return async (dispatch) => {
 		dispatch({
 			type: authConstants.RESET_PASSWORD_REQUEST,
 		});
 
-		// TODO: First implement logout page and then uncomment this
-		// if (isUserLogggedIn()) {
-		// 	dispatch({
-		// 		type: authConstants.FORGOT_PASSWORD_FAILURE,
-		// 		payload: {
-		// 			error: "User Already Logged In",
-		// 		},
-		// 	});
-		// }
+		if (isAuth()) {
+			toast.error("User Already Logged In");
+			dispatch({
+				type: authConstants.RESET_PASSWORD_FAILURE,
+			});
+			const history = createBrowserHistory();
+			history.push("/");
+		}
 
 		axios
 			.put("/auth/resetPassword", {
@@ -212,20 +195,18 @@ export const resetPassword = (resetPasswordLink, password) => {
 				newPassword: password,
 			})
 			.then((res) => {
+				toast.success(res.data.message);
 				dispatch({
 					type: authConstants.RESET_PASSWORD_SUCCESS,
-					payload: {
-						message: res.data.message,
-					},
 				});
+				const history = createBrowserHistory();
+				history.push("/login");
 			})
 			.catch((err) => {
 				const { data } = err.response;
+				toast.error(data.error);
 				dispatch({
 					type: authConstants.RESET_PASSWORD_FAILURE,
-					payload: {
-						error: data.error,
-					},
 				});
 			});
 	};

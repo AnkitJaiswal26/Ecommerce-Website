@@ -1,31 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, Link, Redirect } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import styles from "./Login.module.css";
-import store from "../../store";
 import { isAuth, login } from "../../actions/auth.actions";
-import {useSelector} from 'react-redux';
 
 const Login = () => {
-    const dispatch = useDispatch();
-	const history = useHistory();
-
-	const routeChange = () => {
-		let path = `productIndex`;
-		history.push(path);
-	};
+	const dispatch = useDispatch();
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [error, setError] = useState("");
-	const [message, setMessage] = useState("");
-	const data = useSelector((state) => state.auth);
-
-	useEffect(() => {
-		if (data.message) toast.success(data.message);
-		if (data.error) toast.error(data.error);
-	}, [data]);
 
 	const logIn = async (email, password) => {
 		await dispatch(
@@ -34,22 +18,21 @@ const Login = () => {
 				password: password,
 			})
 		);
+		// window.location.reload();
 	};
 
 	const onSubmit = (e) => {
 		e.preventDefault();
 		try {
-			setError("");
 			logIn(email, password);
-			if(isAuth()) console.log("Logged In");
 		} catch (error) {
-			setError(error);
+			toast.error(error);
 		}
 	};
 
 	return (
 		<>
-			{isAuth(data) ? <Redirect to="/productIndex" /> : null}
+			{isAuth() ? <Redirect to="/" /> : null}
 			<ToastContainer />
 			<div
 				className={`w-full h-screen flex justify-center items-center ${styles.wrapper}`}
@@ -58,10 +41,8 @@ const Login = () => {
 					<div className={`${styles.contentBox}`}></div>
 					<div className={`${styles.formBox}`}>
 						<form onSubmit={onSubmit}>
-							<h2 className={`${styles.heading}`}>
-								Login
-							</h2>
-							
+							<h2 className={`${styles.heading}`}>Login</h2>
+
 							<div className={`${styles.inputContainer}`}>
 								<label className={`${styles.inputLabel}`}>
 									Email
@@ -111,7 +92,7 @@ const Login = () => {
 								Don't have an Account?
 								<Link
 									className={`${styles.alreadyLink}`}
-									to={`/login`}
+									to={`/register`}
 								>
 									{" "}
 									Register
@@ -123,6 +104,6 @@ const Login = () => {
 			</div>
 		</>
 	);
-}
+};
 
-export default Login
+export default Login;

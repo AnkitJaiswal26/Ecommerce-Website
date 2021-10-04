@@ -10,31 +10,19 @@ const ForgotPassword = () => {
 	const dispatch = useDispatch();
 
 	const [email, setEmail] = useState("");
-	const [error, setError] = useState("");
-	const [message, setMessage] = useState("");
-
-	const data = useSelector(state => state.auth);
-
-
-	// TODO: Make this useeffect work. THis is not working properly.
-	useEffect(() => {
-		if (data.message) toast.success(data.message);
-		if (data.error) toast.error(data.error);
-	}, [data]);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
 		try {
-			setError("");
 			dispatch(forgotPassword(email));
 		} catch (error) {
-			setError(error);
+			toast.error(error);
 		}
 	};
 
 	return (
 		<>
-			{isAuth() ? <Redirect to="/productIndex" /> : null}
+			{isAuth() ? <Redirect to="/" /> : null}
 			<ToastContainer />
 			<div
 				className={`w-full h-screen flex justify-center items-center ${styles.wrapper}`}
