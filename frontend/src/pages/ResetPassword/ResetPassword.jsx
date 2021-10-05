@@ -9,52 +9,34 @@ import { isAuth, resetPassword } from "../../actions/auth.actions";
 const ResetPassword = ({ match }) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const data = useSelector(state => state.auth);
-
-	const routeChange = () => {
-		let path = `login`;
-		history.push(path);
-	};
 
 	const [token, setToken] = useState("");
 	const [password, setPassword] = useState("");
-	const [error, setError] = useState("");
 
 	useEffect(() => {
 		let token = match.params.token;
 		if (token) {
 			setToken(token);
 		}
-		// eslint-disable-next-line
 	}, [match.params]);
 
-	useEffect(() => {
-		if (data.message) toast.success(data.message);
-		if (data.error) toast.error(data.error);
-	}, [data]);
-
 	const reset = async (token, password) => {
-		await dispatch(
-			resetPassword(
-				token,
-				password
-			)
-		);
+		await dispatch(resetPassword(token, password));
+		window.location.reload();
 	};
 
 	const onSubmit = (e) => {
 		e.preventDefault();
 		try {
-			setError("");
 			reset(token, password);
 		} catch (error) {
-			setError(error);
+			toast.error(error);
 		}
 	};
 
 	return (
 		<>
-			{isAuth() ? <Redirect to="/productIndex" /> : null}
+			{isAuth() ? <Redirect to="/" /> : null}
 			<ToastContainer />
 			<div
 				className={`w-full h-screen flex justify-center items-center ${styles.wrapper}`}

@@ -13,7 +13,7 @@ function App() {
 		<Router>
 			<div>
 				<Switch>
-					<Route exact path="/productIndex">
+					<Route exact path="/">
 						<Menu />
 					</Route>
 

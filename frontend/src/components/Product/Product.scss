@@ -1,0 +1,136 @@
+.product {
+	width: 100%;
+	border-radius: 8px;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+
+	.productImage {
+		position: relative;
+		padding: 10px;
+		padding-bottom: 0;
+		height: 310px;
+		width: 100%;
+		overflow: hidden;
+
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			transform: 0.5s ease-in-out;
+		}
+
+		.actions {
+			display: none;
+			position: absolute;
+			top: 10px;
+			right: 10px;
+
+			li {
+				position: relative;
+				list-style-type: none;
+				width: 30px;
+				height: 30px;
+				background-color: #fff;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin: 4px;
+				cursor: pointer;
+				color: #555;
+				border: 1px solid #555;
+				border-radius: 5px;
+				box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+				transition: transform 0.5s;
+				transform: translateX(60px);
+
+				.icon {
+					color: #555;
+					font-size: 16px;
+				}
+
+				span {
+					display: none;
+					position: absolute;
+					right: 40px;
+					top: 50%;
+					transform: translateY(-50%);
+					white-space: nowrap;
+					padding: 4px 6px;
+					background-color: #fff;
+					color: #555;
+					font-size: 12px;
+					font-weight: 500;
+					border-radius: 5px;
+					pointer-events: none;
+					border: 1px solid #555;
+				}
+
+				&:hover {
+					background-color: #8bbae5;
+					color: #fff;
+					border-color: #8bbae5;
+
+					.icon {
+						color: #fff;
+					}
+
+					span {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+
+	.content {
+		padding: 10px;
+
+		.name {
+			font-size: 17px;
+			font-weight: 500;
+			color: #333;
+			margin: 5px 0;
+		}
+
+		.priceRating {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			h2 {
+				font-size: 18px;
+				color: #8bbae5;
+				font-weight: 500;
+			}
+
+			.icon {
+				color: #ffd513;
+				cursor: pointer;
+				width: 18px;
+
+				&.gray {
+					color: #ccc;
+				}
+			}
+		}
+	}
+
+	&:hover {
+		.productImage {
+			img {
+				transform: scale(1.3);
+			}
+
+			.actions {
+				display: block;
+
+				li {
+					transform: translateX(0px);
+				}
+			}
+		}
+	}
+}
