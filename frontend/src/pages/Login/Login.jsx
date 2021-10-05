@@ -111,7 +111,7 @@ const Login = () => {
 								Don't have an Account?
 								<Link
 									className={`${styles.alreadyLink}`}
-									to={`/login`}
+									to={`/register`}
 								>
 									{" "}
 									Register
