@@ -13,7 +13,7 @@ const MyAccount = () => {
 
 	return (
 		<>
-			{isAuth() === true ? <Redirect to="/login" /> : null}
+			{isAuth() === false ? <Redirect to="/login" /> : null}
 			<ToastContainer />
 			<Topbar />
 			<div>
