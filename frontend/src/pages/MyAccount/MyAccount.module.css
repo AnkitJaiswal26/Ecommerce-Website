@@ -1,0 +1,72 @@
+.sidebar_account{
+    display: block;
+    float: left;
+    position: absolute;
+    width: 30%;
+    background-color: aliceblue;
+    padding: 2% 1%;
+    margin: 3px 0px;
+    top: 75px;
+    bottom: 0px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-size: large;
+}
+.profile{
+    display: block;
+    float: right;
+    width: 70%;
+    padding: 1%;
+    margin: 3px 0px;
+}
+.sidebar_account a{
+    color: #0b4164;
+    display: block;
+    padding: 1em;
+    border-radius: 10px;
+}
+
+.sidebar_account a:hover{
+    background-color: rgb(151, 187, 218);
+}
+
+.sidebar_account .current{
+    background-color: #0b4164;
+    color: aliceblue;
+    display: block;
+}
+
+.sidebar_account .logout{
+    color: rgb(231, 80, 80);
+    display: block;
+}
+.sidebar_account .logout:hover{
+    color: rgb(255, 255, 255);
+    background-color: rgb(231, 80, 80);
+    display: block;
+}
+
+h3{
+    font-family: "Poppins", sans-serif;
+    font-size: large;
+    font-weight: bold;
+}
+
+input{
+    border: 1px solid black;
+    margin: 2px;
+    padding: 3px;
+}
+
+input:read-only{
+    background-color: rgb(214, 206, 195);
+}
+
+input[type=submit]{
+    background-color: #0b4164;
+    color: aliceblue;
+}
+
+input[type=submit]:hover{
+    background-color: rgb(151, 187, 218);
+}
