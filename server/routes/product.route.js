@@ -25,7 +25,7 @@ router.post(
 
 router.get("/all", getAllProductsController);
 
-router.get("/", getProductByIdController);
+router.get("/:id", getProductByIdController);
 
 router.delete("/", deleteProductByIdController);
 

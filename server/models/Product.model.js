@@ -9,12 +9,12 @@ const ProductSchema = new mongoose.Schema(
 		},
 		slug: {
 			type: String,
-			required: true,
-			unique: true,
+			// required: true,
+			// unique: true,
 		},
 		category: {
 			type: String,
-			required: true
+			// required: true
 		},
 		price: {
 			type: Number,
@@ -22,7 +22,7 @@ const ProductSchema = new mongoose.Schema(
 		},
 		desc: {
 			type: String,
-			required: true,
+			// required: true,
 			trim: true,
 		},
 		productImages: [
@@ -54,7 +54,7 @@ const ProductSchema = new mongoose.Schema(
 		createdBy: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "User",
-			required: true,
+			// required: true,
 		},
 		updatedAt: Date,
 	},
