@@ -4,16 +4,17 @@ import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import store from "../../store/index";
 import { useSelector } from "react-redux";
-import { getItems } from "../../actions/products.action";
 import { isAuth } from "../../actions/auth.actions";
 import Topbar from "../../components/Topbar/Topbar";
 import Product from "../../components/Product/Product";
 import "./Menu.scss";
 import Filters from "../../components/Filters/Filters";
+import axios from "../../helpers/axios";
 
 const Menu = () => {
-  // const data = useSelector((state) => state);
-  // // const products = useSelector((state) => state.products);
+  const productList = useSelector((state) => state.products.productList);
+  // console.log(productList);
+  // const products = useSelector((state) => state.products);
   // const history = useHistory();
   // const dispatch = useDispatch();
   // // const state = store.getState();
@@ -23,17 +24,17 @@ const Menu = () => {
 
   // useEffect(() => {
   // 	dispatch(getItems());
-  // 	// setProductList(data.products.productList);
-  // 	// console.log(data);
-  // 	// console.log(productList);
+  // 	setProductList(data.products.productList);
+  // 	console.log(data);
+  // 	console.log(productList);
   // }, [data]);
   // const [productList, setProductList] = useState([
   // 	...data.products.productList,
   // ]);
   // console.log(productList);
-  // // console.log(productList)
+  // console.log(productList)
   // useEffect(() => {
-  // 	// setProductList(data.products.productList);
+  // 	setProductList(data.products.productList);
   // });
 
   return (

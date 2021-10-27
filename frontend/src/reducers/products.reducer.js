@@ -13,8 +13,7 @@ export const productReducer = (state = initState, action) => {
 		case productConstants.GET_ITEMS:
 			state = {
 				...state,
-				message: action.payload.message,
-				productList: action.payload.data,
+				productList: action.payload.products,
 			};
 			break;
 		case productConstants.ADD_ITEMS:

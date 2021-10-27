@@ -2,19 +2,16 @@ import axios from "../helpers/axios";
 import { productConstants } from "./constants";
 // import { returnErrors } from "./errorActions";
 
-export const getItems = () => (dispatch) => {
-  dispatch(setItemsLoading());
+export const getItems = () => async (dispatch) => {
+  // dispatch(setItemsLoading());
   // console.log("Hi from actions")
-  axios.get("product/all").then((res) => {
-    // console.log("Hi from actions");
-    // console.log(res.data)
-    dispatch({
-      type: productConstants.GET_ITEMS,
-      payload: {
-        message: "Success!",
-        data: res.data.products,
-      },
-    });
+  const { data } = await axios.get("product/all");
+  console.log(data.products);
+  dispatch({
+    type: productConstants.GET_ITEMS,
+    payload: {
+      products: data.products,
+    },
   });
   // .catch((err) =>
   // 	dispatch(returnErrors(err.response.data, err.response.status))
@@ -64,8 +61,8 @@ export const updateItem = (id, item) => (dispatch) => {
   // );
 };
 
-export const setItemsLoading = () => {
-  return {
-    type: productConstants.ITEMS_LOADING,
-  };
-};
+// export const setItemsLoading = () => {
+//   return {
+//     type: productConstants.ITEMS_LOADING,
+//   };
+// };

@@ -5,8 +5,11 @@ import App from "./App";
 import { Provider } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 import store from "./store";
+import { getItems } from "./actions/products.action";
 
 window.store = store;
+
+store.dispatch(getItems());
 
 ReactDOM.render(
   <Provider store={store}>
