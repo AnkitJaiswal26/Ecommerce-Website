@@ -56,4 +56,6 @@ export const categoryConstants = {
 export const cartConstants = {
   CART_ADD_ITEM: "CART_ADD_ITEM",
   CART_REMOVE_ITEM: "CART_REMOVE_ITEM",
+  CART_ADD_ONE: "CART_ADD_ONE",
+  CART_REMOVE_ONE: "CART_REMOVE_ONE"
 };

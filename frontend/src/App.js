@@ -8,6 +8,7 @@ import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Menu from "./pages/Menu/Menu";
 import Product from "./pages/Product/Product";
 import MyAccount from "./pages/MyAccount/MyAccount";
+import Cart from "./pages/Cart/Cart";
 
 function App() {
   return (
@@ -45,6 +46,9 @@ function App() {
           />
           <Route path="/register" exact>
             <Register />
+          </Route>
+          <Route path="/cart" exact>
+            <Cart />
           </Route>
         </Switch>
       </div>

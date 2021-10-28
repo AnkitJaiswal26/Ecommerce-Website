@@ -6,16 +6,16 @@ import {
 } from "@material-ui/icons";
 import React, { useState } from "react";
 import "./Product.scss";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as cartActions from '../../actions/cart.actions';
+import * as cartActions from "../../actions/cart.actions";
 
-const Product = ({ img, name, price }) => {
-	const dispatch = useDispatch();
-	const clickedCart = () => {
-		dispatch(cartActions.addToCart("616d8cf6bc391b2162102976",1))
-	}
-  	return (
+const Product = ({ id, img, name, price, brand }) => {
+  const dispatch = useDispatch();
+  const clickedCart = () => {
+    dispatch(cartActions.addToCart(id,img,name,price,brand,1));
+  };
+  return (
     <div className="product">
       <div className="productImage">
         <img src={img} alt="" />

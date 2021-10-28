@@ -6,11 +6,10 @@ export const getItems = () => async (dispatch) => {
   // dispatch(setItemsLoading());
   // console.log("Hi from actions")
   const { data } = await axios.get("product/all");
-  console.log(data.products);
   dispatch({
     type: productConstants.GET_ITEMS,
     payload: {
-      products: data.products,
+      products: data.products.slice(0,24),
     },
   });
   // .catch((err) =>

@@ -77,8 +77,8 @@ module.exports.addProductController = (req, res) => {
 
 module.exports.getAllProductsController = (req, res) => {
   Product.find()
-    .select("_id name price quantity slug description productImages category")
-    .populate({ path: "category", select: "_id name" })
+    .select("_id product_name retail_price slug description image category brand")
+    // .populate({ path: "category", select: "_id name" })
     .exec((err, products) => {
       if (err) {
         return res.status(400).json({
@@ -94,23 +94,22 @@ module.exports.getAllProductsController = (req, res) => {
 module.exports.getProductByIdController = (req, res) => {
 
   const { id } = req.params;
-  console.log(id);
-  
-  // if (!id) {
-  //   return res.status(400).json({
-  //     error: "Product Id is required!",
-  //   });
-  // }
-  // Product.find({ _id: id }).exec((err, product) => {
-  //   if (err) {
-  //     return res.status(400).json({
-  //       error: error,
-  //     });
-  //   }
-  //   return res.status(200).json({
-  //     product,
-  //   });
-  // });
+  if (!id) {
+    return res.status(400).json({
+      error: "Product Id is required!",
+    });
+  }
+  Product.find({ _id: id }).exec((err, product) => {
+    if (err) {
+      
+      return res.status(400).json({
+        error: error,
+      });
+    }
+    return res.status(200).json({
+      product,
+    });
+  });
 };
 
 module.exports.deleteProductByIdController = (req, res) => {

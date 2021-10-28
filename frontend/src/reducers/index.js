@@ -5,6 +5,6 @@ import { cartReducer } from "./cart.reducers";
 
 export const rootReducer = combineReducers({
   auth: authReducer,
-  products: productReducer,
-  cart : cartReducer,
+  cart: cartReducer,
+  products: productReducer
 });

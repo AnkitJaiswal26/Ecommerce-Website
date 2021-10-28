@@ -44,7 +44,17 @@ const Menu = () => {
       <Topbar />
       <Filters />
       <div className="productsContainer">
-        <Product
+        {productList.map((product) => (
+          <Product
+            key={product._id}
+            id={product._id}
+            img={product.image}
+            name={product.product_name}
+            price={product.retail_price}
+            brand={product.brand}
+          />
+        ))}
+        {/* <Product
           key="1"
           img="https://flone.reactdemo.hasthemes.com/assets/img/product/fashion/28.jpg"
           name="Blue Shirt"
@@ -127,7 +137,7 @@ const Menu = () => {
           name="Blue Shirt"
           price="100.00"
           img="https://flone.reactdemo.hasthemes.com/assets/img/product/fashion/28.jpg"
-        />
+        /> */}
       </div>
       {/* <div>
 				<h1>Hello</h1>
