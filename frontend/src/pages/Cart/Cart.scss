@@ -25,6 +25,22 @@ main{
         font-size: 1.5em;
     }
 
+    .empty{
+        text-align: center;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 500;
+        font-size: 1.5em;
+
+        p
+        {
+            padding: 10% 0;
+        }
+
+        button
+        {
+            background-color: #5c8ec6;
+        }
+    }
 }
 
 aside{
