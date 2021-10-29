@@ -4,7 +4,7 @@ const Cart = require("../models/Cart.model");
 // Returns the user's current cart
 exports.getCart = async(req,res) => {
 
-    const cart = await Cart.findOne({ userId : "60f02ba894e9392670f15871" }).populate('products.productId', 'name price');
+    const cart = await Cart.findOne({ userId : req.body.user._id }).populate('products.productId', 'name price');
     return res.status(200).json({
         cart })
 }
@@ -13,7 +13,9 @@ exports.addOneItemController = async(req,res) => {
 
     const { productId } = req.params;
     const product = await Product.findById(productId);
+    console.log(product);
     const cart = await Cart.findOne({ userId : req.body.user._id });
+    console.log(cart);
     
     if(cart){
 
@@ -26,7 +28,7 @@ exports.addOneItemController = async(req,res) => {
                 quantity: 1
             });
         }
-        cart.total += product.price;
+        cart.total += parseInt(product.retail_price);
 
         await cart.save();
         return res.redirect("/api/cart");
@@ -37,7 +39,7 @@ exports.addOneItemController = async(req,res) => {
                 productId,
                 quantity : 1
             } ],
-            total : product.price
+            total : parseInt(product.retail_price)
         });
 
         await newCart.save();

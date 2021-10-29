@@ -77,7 +77,9 @@ module.exports.addProductController = (req, res) => {
 
 module.exports.getAllProductsController = (req, res) => {
   Product.find()
-    .select("_id product_name retail_price slug description image category brand")
+    .select(
+      "_id product_name retail_price slug description image category brand"
+    )
     // .populate({ path: "category", select: "_id name" })
     .exec((err, products) => {
       if (err) {
@@ -92,7 +94,6 @@ module.exports.getAllProductsController = (req, res) => {
 };
 
 module.exports.getProductByIdController = (req, res) => {
-
   const { id } = req.params;
   if (!id) {
     return res.status(400).json({
@@ -101,7 +102,6 @@ module.exports.getProductByIdController = (req, res) => {
   }
   Product.find({ _id: id }).exec((err, product) => {
     if (err) {
-      
       return res.status(400).json({
         error: error,
       });

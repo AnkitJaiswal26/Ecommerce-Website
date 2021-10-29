@@ -5,7 +5,7 @@ const initialState = {
     product: "61798e776e86363cd2d58260",
     name: "Alisha Solid Women's Cycling Shorts",
     image: "http://img5a.flixcart.com/image/short/u/4/a/altht-3p-21-alisha-38-original-imaeh2d5vm5zbtgg.jpeg",
-    price: 999.0,
+    price: '999.0',
     brand: "Alisha",
     qty: 1
   }],
