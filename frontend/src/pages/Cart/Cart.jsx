@@ -1,11 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link,Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./Cart.scss";
 import Topbar from "../../components/Topbar/Topbar";
 import CartItem from "../../components/cartItem/cartItem";
 import axios from '../../helpers/axios';
 import { loadStripe } from "@stripe/stripe-js";
+import { isAuth } from "../../actions/auth.actions";
+
 
 const stripePromise = loadStripe("pk_test_51JDrrrSISNBaSVWlLJZpA2SZA1Wp9nv4h0OwwwgHIRp55uNSNMaZifqqX7XxIDJKPGQjZlVqPi4w4HpbYJQnXOf6004vRl90Lj");
 
@@ -22,7 +24,6 @@ const Cart = () => {
   const checkout = async() => {
 
     const stripe = await stripePromise;
-    // console.log('I am being called');
     const {data} = await axios.post('/create-checkout-session',{
         cart
       }
@@ -41,6 +42,7 @@ const Cart = () => {
 
   return (
     <>
+      {isAuth() === false ? <Redirect to="/login" /> : null}
       <Topbar/>
       <div id="container">
         <main>
