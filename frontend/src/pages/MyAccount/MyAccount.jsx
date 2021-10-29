@@ -10,7 +10,10 @@ import Topbar from "../../components/Topbar/Topbar";
 import styles from "./MyAccount.module.css";
 
 const MyAccount = () => {
-
+    const user = JSON.parse(localStorage.getItem("user"));
+    const usern = user.username;
+    const role = user.role;
+    const email = user.email;
 	return (
 		<>
 			{isAuth() === false ? <Redirect to="/login" /> : null}
@@ -29,13 +32,13 @@ const MyAccount = () => {
                 <section class="profile" className={`${styles.profile}`}>
                     <div>
                         <h3>Username</h3>
-                        <input type="text" id="username" placeholder="Username" value="resh_test" readOnly></input>
+                        <input type="text" id="username" placeholder="Username" value={usern} readOnly></input>
                     </div>
                     <br/>
                     <div>
                         <h3>Email</h3>
                         <form>
-                            <input type="text" id="email" placeholder="Email ID" defaultValue="resh_testing@gmail.com"></input>
+                            <input type="text" id="email" placeholder="Email ID" defaultValue={email}></input>
                             <input type="submit" value="Update Email Address"></input>
                         </form>
                     </div>
@@ -55,7 +58,7 @@ const MyAccount = () => {
                     <br/>
                     <div>
                         <h3>Role</h3>
-                        <input type="text" id="role" placeholder="Role" value="Customer" readOnly></input>
+                        <input type="text" id="role" placeholder="Role" value={role} readOnly></input>
                     </div>
                 </section>
             </div>
