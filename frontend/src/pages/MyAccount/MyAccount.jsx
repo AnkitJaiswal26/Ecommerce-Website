@@ -20,7 +20,7 @@ const MyAccount = () => {
                 <section class="sidebar_account" className={`${styles.sidebar_account}`}>
                     <nav>
                         <a href="" class="current" className={`${styles.current}`}>My Profile</a><br/>
-                        <a href="">My Orders</a><br/>
+                        <a href="/myorders/">My Orders</a><br/>
                         <a href="">Addresses</a><br/>
                         <a href="">Settings and Preferences</a><br/>
                         <a href="" class="logout" className={`${styles.logout}`}>Logout</a>

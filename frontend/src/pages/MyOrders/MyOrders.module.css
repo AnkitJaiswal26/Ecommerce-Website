@@ -1,0 +1,320 @@
+.sidebar_account{
+    display: block;
+    float: left;
+    position: absolute;
+    width: 30%;
+    background-color: aliceblue;
+    padding: 2% 1%;
+    margin: 3px 0px;
+    top: 75px;
+    bottom: 0px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-size: large;
+}
+.profile{
+    display: block;
+    float: right;
+    width: 70%;
+    padding: 0px 5px;
+    margin: 0px 0px;
+}
+.sidebar_account a{
+    color: #0b4164;
+    display: block;
+    padding: 1em;
+    border-radius: 10px;
+}
+
+.sidebar_account a:hover{
+    background-color: rgb(151, 187, 218);
+}
+
+.sidebar_account .current{
+    background-color: #0b4164;
+    color: aliceblue;
+    display: block;
+}
+
+.sidebar_account .logout{
+    color: rgb(231, 80, 80);
+    display: block;
+}
+.sidebar_account .logout:hover{
+    color: rgb(255, 255, 255);
+    background-color: rgb(231, 80, 80);
+    display: block;
+}
+
+h3{
+    font-family: "Poppins", sans-serif;
+    font-size: large;
+    font-weight: bold;
+}
+
+input{
+    border: 1px solid black;
+    margin: 2px;
+    padding: 3px;
+}
+
+input:read-only{
+    background-color: rgb(214, 206, 195);
+}
+
+input[type=submit]{
+    background-color: #0b4164;
+    color: aliceblue;
+}
+
+input[type=submit]:hover{
+    background-color: rgb(151, 187, 218);
+}
+
+.tabletime {
+    background: #fff;
+    padding: 5px 25px;
+    margin: 30px auto;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    
+}
+.tabletime .btn {
+    float: right;
+    color: #333;
+    background-color: #fff;
+    border-radius: 3px;
+    border: none;
+    outline: none !important;
+    margin-left: 10px;
+}
+.tabletime .btn:hover {
+    color: #333;
+    background: #f2f2f2;
+}
+.tabletime .btn {
+    color: #fff;
+    background: rgb(151, 187, 218);
+    padding: 2px 8px;
+}
+.tabletime .btn:hover {
+    color: #000;
+    background: rgb(151, 187, 218);
+}
+.tabletitle .btn {		
+    font-size: 13px;
+    border: none;
+}
+.tabletitle .btn i {
+    float: left;
+    font-size: 21px;
+    margin-right: 5px;
+}
+.tabletitle .btn span {
+    float: left;
+    margin-top: 2px;
+}
+.tabletitle {
+    color: #fff;
+    background: rgb(151, 187, 218);		
+    padding: 16px 25px;
+    margin: -20px -25px 10px;
+    border-radius: 3px 3px 0 0;
+}
+.tabletitle h2 {
+    margin: 5px 0 0;
+    font-size: 24px;
+}
+.showentries select.formcontrol {        
+    width: 60px;
+    margin: 0 5px;
+}
+.tablefilter .filtergroup {
+    float: right;
+    margin-left: 15px;
+}
+.tablefilter input, .tablefilter select {
+    height: 34px;
+    border-radius: 3px;
+    border-color: #ddd;
+    box-shadow: none;
+}
+.tablefilter {
+    padding: 5px 0 50px;
+    border-bottom: 1px solid #e9e9e9;
+    margin-bottom: 5px;
+}
+.tablefilter .btn {
+    height: 34px;
+}
+.tablefilter label {
+    font-weight: normal;
+    margin-left: 10px;
+}
+.tablefilter select, .tablefilter input {
+    display: inline-block;
+    margin-left: 5px;
+}
+.tablefilter input {
+    width: 200px;
+    display: inline-block;
+}
+.filtergroup select.formcontrol {
+    width: 110px;
+}
+.filtericon {
+    float: right;
+    margin-top: 7px;
+}
+.filtericon i {
+    font-size: 18px;
+    opacity: 0.7;
+}	
+table.table tr th, table.table tr td {
+    border-color: #e9e9e9;
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+table.table tr th:first-child {
+    width: 60px;
+}
+table.table tr th:last-child {
+    width: 80px;
+}
+table.tablestriped tbody tr:nth-of-type(odd) {
+    background-color: #fcfcfc;
+}
+table.tablestriped.tablehover tbody tr:hover {
+    background: #f5f5f5;
+}
+table.table th i {
+    font-size: 13px;
+    margin: 0 5px;
+    cursor: pointer;
+}	
+
+.formcontrol{
+    border: solid;
+}
+
+table.table td a {
+    font-weight: bold;
+    color: #566787;
+    display: inline-block;
+    text-decoration: none;
+}
+table.table td a:hover {
+    color: #2196F3;
+}
+table.table td a.view {        
+    width: 30px;
+    height: 30px;
+    color: #2196F3;
+    border: 2px solid;
+    border-radius: 30px;
+    text-align: center;
+}
+table.table td a.view i {
+    font-size: 22px;
+    margin: 2px 0 0 1px;
+}   
+table.table .avatar {
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.status {
+    font-size: 30px;
+    margin: 2px 2px 0 0;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 10px;
+}
+.textsuccess {
+    color: #10c469;
+}
+.textinfo {
+    color: #62c9e8;
+}
+.textwarning {
+    color: #FFC107;
+}
+.textdanger {
+    color: #ff5b5b;
+}
+.pagination {
+    float: right;
+    margin: 0 0 5px;
+    display: inline;
+    overflow: hidden;
+    white-space:nowrap;
+}
+.pagination .pageitem a {
+    border: none;
+    font-size: 13px;
+    min-width: 30px;
+    min-height: 30px;
+    display: inline;
+    color: #999;
+    margin: 0 2px;
+    line-height: 30px;
+    border-radius: 2px !important;
+    text-align: center;
+    padding: 0 6px;
+}
+.pagination .pageitem a:hover {
+    color: #666;
+}	
+.pagination .pageitem.active a {
+    background: #03A9F4;
+}
+.pagination .pageitem.active a:hover {        
+    background: #0397d6;
+}
+.pagination .pageitem.disabled i {
+    color: #ccc;
+}
+.pagination .pageitem i {
+    font-size: 16px;
+    padding-top: 6px
+}
+.hinttext {
+    float: left;
+    margin-top: 10px;
+    font-size: 13px;
+}    
+.previous {
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 13px;
+    color: #0397d6;
+}    
+.next {
+    float: left;
+    margin-top: 10px;
+    margin-left: 5px;
+    font-size: 13px;
+    color: #0397d6;
+}    
+.previous:hover {
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 13px;
+    color: #043a52;
+}    
+.next:hover {
+    float: left;
+    margin-top: 10px;
+    margin-left: 5px;
+    font-size: 13px;
+    color: #043a52;
+}   
+
+.col1{
+    display: block;
+    float: left;
+    position: absolute;
+    width: 30%;
+}
