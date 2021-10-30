@@ -113,6 +113,15 @@ export const authReducer = (state = initState, action) => {
 				...state,
 			};
 			break;
+		case authConstants.UPDATE_EMAIL:
+			state = {
+				...state,
+				user: {
+					...state.user,
+					email: action.payload.user,
+				},
+			};
+			break;
 		default:
 			break;
 	}

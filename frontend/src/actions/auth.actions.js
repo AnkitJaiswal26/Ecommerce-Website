@@ -74,7 +74,6 @@ export const login = (user, history) => {
 				localStorage.setItem("user", JSON.stringify(user));
 				toast.success("Login Successfully!");
 
-
 				dispatch({
 					type: authConstants.LOGIN_SUCCESS,
 					payload: {
@@ -83,7 +82,7 @@ export const login = (user, history) => {
 					},
 				});
 
-				history.push('/')
+				history.push("/");
 			})
 			.catch((err) => {
 				console.log(err);
@@ -187,8 +186,6 @@ export const resetPassword = (resetPasswordLink, password) => {
 			dispatch({
 				type: authConstants.RESET_PASSWORD_FAILURE,
 			});
-			const history = createBrowserHistory();
-			history.push("/");
 		}
 
 		axios
@@ -210,6 +207,29 @@ export const resetPassword = (resetPasswordLink, password) => {
 				dispatch({
 					type: authConstants.RESET_PASSWORD_FAILURE,
 				});
+			});
+	};
+};
+
+export const updateEmail = (email) => {
+	return async (dispatch) => {
+		axios
+			.put("/users/updateEmail", {
+				email: email,
+			})
+			.then((res) => {
+				const { message, user } = res.data;
+				toast.success(message);
+
+				dispatch({
+					type: authConstants.UPDATE_EMAIL,
+					payload: {
+						email: email,
+					},
+				});
+			})
+			.catch((err) => {
+				toast.error(err.response.data.error);
 			});
 	};
 };

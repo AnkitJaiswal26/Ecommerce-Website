@@ -3,7 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./Cart.scss";
 import Topbar from "../../components/Topbar/Topbar";
-import CartItem from "../../components/cartItem/cartItem";
+import CartItem from "../../components/cartItem/CartItem";
 import axios from "../../helpers/axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { isAuth } from "../../actions/auth.actions";
@@ -15,7 +15,6 @@ const stripePromise = loadStripe(
 
 const Cart = (props) => {
 	const cart = useSelector((state) => state.cart.cartItems);
-	console.log(cart);
 	const amount = cart.reduce(
 		(total, item) => total + item.qty * item.price,
 		0
@@ -28,19 +27,24 @@ const Cart = (props) => {
 
 	const checkout = async () => {
 		const stripe = await stripePromise;
-		const { data } = await axios.post("/create-checkout-session", {
-			cart,
-		});
 
-		const result = await stripe.redirectToCheckout({
-			sessionId: data.id,
-		});
-
-		if (result.error) {
-			// If `redirectToCheckout` fails due to a browser or network
-			// error, display the localized error message to your customer
-			toast.error(result.error.message);
-		}
+		await axios
+			.post("/create-checkout-session", {
+				cart,
+			})
+			.then(async (res) => {
+				const { data } = res;
+				await stripe
+					.redirectToCheckout({
+						sessionId: data.id,
+					})
+					.then((res) => {
+						localStorage.removeItem("cartItems");
+					})
+					.catch((err) => {
+						toast.error(err.response.error.message);
+					});
+			});
 	};
 
 	return (

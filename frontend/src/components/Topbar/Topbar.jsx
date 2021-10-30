@@ -10,10 +10,16 @@ import {
 	SettingsOutlined,
 	ShoppingCartOutlined,
 } from "@material-ui/icons";
+import { useDispatch } from "react-redux";
+import { logout } from "../../actions/auth.actions";
 
 const Topbar = (props) => {
+	const dispatch = useDispatch();
+
 	const [data, setData] = useState(
-		new URLSearchParams(props.location.search).get("search") ? new URLSearchParams(props.location.search).get("search") : ""
+		new URLSearchParams(props.location.search).get("search")
+			? new URLSearchParams(props.location.search).get("search")
+			: ""
 	);
 	const [dropdown, setDropdown] = useState(false);
 
@@ -119,7 +125,7 @@ const Topbar = (props) => {
 													queries
 												)}`,
 											});
-                      window.location.reload(true)
+											window.location.reload(true);
 										}}
 									>
 										<SearchOutlined className="searchicon" />
@@ -140,7 +146,7 @@ const Topbar = (props) => {
 								>
 									<li onClick={() => setDropdown(false)}>
 										<div className="dropdownLink">
-											<Link to="/">
+											<Link to="/account">
 												<SettingsOutlined className="icon" />{" "}
 												Settings
 											</Link>
@@ -148,7 +154,7 @@ const Topbar = (props) => {
 									</li>
 									<li onClick={() => setDropdown(false)}>
 										<div className="dropdownLink">
-											<Link to="/">
+											<Link to="/myorders">
 												<SettingsOutlined className="icon" />{" "}
 												My Orders
 											</Link>
@@ -156,7 +162,12 @@ const Topbar = (props) => {
 									</li>
 									<li onClick={() => setDropdown(false)}>
 										<div className="dropdownLink">
-											<Link to="/">
+											<Link
+												to="/"
+												onClick={async (e) =>
+													await dispatch(logout())
+												}
+											>
 												<SettingsOutlined className="icon" />{" "}
 												Logout
 											</Link>

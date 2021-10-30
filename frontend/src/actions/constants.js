@@ -22,6 +22,7 @@ export const authConstants = {
   DELETE_ITEM: "DELETE_ITEM",
   UPDATE_ITEM: "UPDATE_ITEM",
   ITEMS_LOADING: "ITEMS_LOADING",
+  UPDATE_EMAIL: "UPDATE_EMAIL"
 };
 
 export const productConstants = {

@@ -108,8 +108,10 @@
 						text-align: start;
 						border-radius: 5px;
 						right: 0px;
+						background-color: white;
 						box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
 						padding: 5px 0;
+						z-index: 10000;
 
 						& li {
 							width: 100%;
