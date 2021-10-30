@@ -2,93 +2,92 @@ const Product = require("../models/Product.model");
 const Cart = require("../models/Cart.model");
 
 // Returns the user's current cart
-exports.getCart = async(req,res) => {
+exports.getCart = async (req, res) => {
+	const cart = await Cart.findOne({ userId: req.body.user._id });
+	return res.status(200).json({
+		cart,
+	});
+};
 
-    const cart = await Cart.findOne({ userId : req.body.user._id });
-    return res.status(200).json({
-        cart })
-}
+exports.addOneItemController = async (req, res) => {
+	const { productId } = req.params;
+	const product = await Product.findById(productId);
+	const cart = await Cart.findOne({ userId: req.body.user._id });
 
-exports.addOneItemController = async(req,res) => {
+	if (cart) {
+		const itemIndex = cart.products.findIndex(
+			(p) => p.product == productId
+		);
+		if (itemIndex > -1) {
+			cart.products[itemIndex].quantity += 1;
+		} else {
+			cart.products.push({
+				product: product._id,
+				name: product.product_name,
+				image: product.image,
+				price: product.retail_price,
+				brand: product.brand,
+				quantity: 1,
+			});
+		}
 
-    const { productId } = req.params;
-    const product = await Product.findById(productId);
-    const cart = await Cart.findOne({ userId : req.body.user._id });
+		cart.total += parseInt(product.retail_price);
+		await cart.save();
+		res.status(200).json({ cart });
+	} else {
+		const newCart = new Cart({
+			userId: req.body.user._id,
+			products: [
+				{
+					product: product._id,
+					name: product.product_name,
+					image: product.image,
+					price: product.retail_price,
+					brand: product.brand,
+					quantity: 1,
+				},
+			],
+			total: parseInt(product.retail_price),
+		});
+		await newCart.save();
+		res.status(200).json({ cart });
+	}
+};
 
-    if(cart){
+exports.removeOneItemController = async (req, res) => {
+	const { productId } = req.params;
+	const cart = await Cart.findOne({ userId: req.body.user._id });
+	const itemIndex = cart.products.findIndex((p) => p.product == productId);
 
-        const itemIndex = cart.products.findIndex(p => p.product == productId);
-        if (itemIndex > -1) {
-            cart.products[itemIndex].quantity += 1;
-        }else{
-            cart.products.push({
-                product : product._id,
-                name : product.product_name,
-                image : product.image,
-                price : product.retail_price,
-                brand : product.brand,
-                quantity: 1
-            });
-        }
+	if (itemIndex > -1) {
+		const productItem = cart.products[itemIndex];
+		productItem.quantity -= 1;
+		cart.total -= parseInt(productItem.price);
 
-        cart.total += parseInt(product.retail_price);
-        await cart.save();
-        res.status(200).json({cart});
-    } else{
-        const newCart = new Cart({
-            userId : req.body.user._id,
-            products: [ {
-                product : product._id,
-                name : product.product_name,
-                image : product.image,
-                price : product.retail_price,
-                brand : product.brand,
-                quantity: 1
-            } ],
-            total : parseInt(product.retail_price)
-        });
-        await newCart.save();
-        res.status(200).json({cart});
-    }
-}
+		if (productItem.quantity == 0) {
+			cart.products.splice(itemIndex);
+		}
 
-exports.removeOneItemController = async(req,res) => {
+		await cart.save();
+		return res.json({ cart });
+	} else {
+		return res.json({ error: "Item Not Found" });
+	}
+};
 
-    const { productId } = req.params;
-    const cart = await Cart.findOne({ userId : req.body.user._id });
-    const itemIndex = cart.products.findIndex(p => p.product == productId);
+exports.removeItemController = async (req, res) => {
+	const { productId } = req.params;
+	const cart = await Cart.findOne({ userId: req.body.user._id });
 
-    if (itemIndex > -1) {
-        const productItem = cart.products[itemIndex];
-        productItem.quantity -= 1;
-        cart.total -= parseInt(productItem.price);
+	const itemIndex = cart.products.findIndex((p) => p.product == productId);
 
-        if(productItem.quantity == 0){
-            cart.products.splice(itemIndex);
-        }
-
-        await cart.save();
-        return res.json( { cart } );
-    } else {
-        return res.json( { error : 'Item Not Found'} );
-    }
-}
-
-exports.removeItemController =  async(req,res) => {
-
-    const { productId } = req.params;
-    const cart = await Cart.findOne({ userId : req.body.user._id });
-    
-    const itemIndex = cart.products.findIndex(p => p.product == productId);
-
-    if (itemIndex > -1) {
-        
-        const productItem = cart.products[itemIndex];
-        cart.total -= (productItem.quantity * productItem.price);
-        cart.products.splice(itemIndex);
-        await cart.save();
-        return res.json({cart});
-    } else {
-        return res.json( { error : 'Item Not Found'} );
-    } 
-}
+	if (itemIndex > -1) {
+		const productItem = cart.products[itemIndex];
+		cart.total -= productItem.quantity * productItem.price;
+		cart.products.splice(itemIndex);
+		await cart.save();
+		return res.json({ cart });
+	} else {
+		return res.json({ error: "Item Not Found" });
+	}
+};

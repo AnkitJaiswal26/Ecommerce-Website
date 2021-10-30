@@ -64,9 +64,11 @@ function App() {
 					<Route path="/register" exact>
 						<Register />
 					</Route>
-					<Route path="/cart" exact>
-						<Cart />
-					</Route>
+					<Route
+						path="/cart"
+						exact
+						render={(props) => <Cart {...props} />}
+					/>
 				</Switch>
 			</div>
 		</Router>

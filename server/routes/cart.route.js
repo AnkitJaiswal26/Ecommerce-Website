@@ -9,11 +9,12 @@ const {
 	removeItemController
 
 } = require("../controllers/cart.controller");
+const verify = require("../helpers/verifyToken");
 
-router.get("/", wrapAsync(getCart));
+router.get("/", verify, wrapAsync(getCart));
 
-router.post( "/:productId", wrapAsync(addOneItemController))
-	.delete("/:productId", wrapAsync(removeOneItemController));
+router.post( "/:productId", verify, wrapAsync(addOneItemController))
+	.delete("/:productId", verify, wrapAsync(removeOneItemController));
 
 router.delete("/entire/:productId", wrapAsync(removeItemController));
 
