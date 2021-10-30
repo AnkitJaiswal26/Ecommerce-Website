@@ -1,20 +1,15 @@
 import axios from "../helpers/axios";
 import { productConstants } from "./constants";
-// import { returnErrors } from "./errorActions";
 
 export const getItems = () => async (dispatch) => {
-  // dispatch(setItemsLoading());
-  // console.log("Hi from actions")
   const { data } = await axios.get("product/all");
   dispatch({
     type: productConstants.GET_ITEMS,
     payload: {
-      products: data.products.slice(0,24),
+      products: data.products,
+      // products: data.products.slice(0, 24),
     },
   });
-  // .catch((err) =>
-  // 	dispatch(returnErrors(err.response.data, err.response.status))
-  // );
 };
 
 export const addItem = (item) => (dispatch) => {
@@ -34,19 +29,6 @@ export const addItem = (item) => (dispatch) => {
     );
 };
 
-// export const deleteItem = (id) => (dispatch) => {
-// 	axios
-// 		.delete(`/api/products/${id}`)
-// 		.then((res) =>
-// 			dispatch({
-// 				type: productConstants.DELETE_ITEM,
-// 				payload: id,
-// 			})
-// 		)
-// 		.catch((err) =>
-// 			dispatch(returnErrors(err.response.data, err.response.status))
-// 		);
-// };
 
 export const updateItem = (id, item) => (dispatch) => {
   axios.put(`/product/${id}`, item).then((res) =>
@@ -55,13 +37,4 @@ export const updateItem = (id, item) => (dispatch) => {
       payload: Promise.all([id, res.data]),
     })
   );
-  // .catch((err) =>
-  // 	dispatch(returnErrors(err.response.data, err.response.status))
-  // );
 };
-
-// export const setItemsLoading = () => {
-//   return {
-//     type: productConstants.ITEMS_LOADING,
-//   };
-// };

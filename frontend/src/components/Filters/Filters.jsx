@@ -36,12 +36,12 @@ const Filters = () => {
 					<ul className={!dropdown ? "dropdown clicked" : "dropdown"}>
 						<li onClick={() => setDropdown(false)}>
 							<div className="dropdownLink active">
-								<Link to="/">Price Hight to Low</Link>
+								<Link to="/">Price High to Low</Link>
 							</div>
 						</li>
 						<li onClick={() => setDropdown(false)}>
 							<div className="dropdownLink">
-								<Link to="/">Price Hight to Low</Link>
+								<Link to="/">Name: Ascending</Link>
 							</div>
 						</li>
 						<li
@@ -50,7 +50,7 @@ const Filters = () => {
 							}}
 						>
 							<div className="dropdownLink">
-								<Link to="/">Price Hight to Low</Link>
+								<Link to="/">Name: Descending</Link>
 							</div>
 						</li>
 					</ul>

@@ -1,0 +1,92 @@
+.mainIndividualProductContainer {
+    color: #555;
+    .productContainer{
+        padding: 50px 40px;
+        padding-left: 170px;
+        display: flex;
+        align-items: flex-start;
+
+        .imageContainer {
+            margin-right: 70px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+            img {
+                width: 400px;
+                height: 500px;
+            }
+        }
+        .productDetails{
+            max-width: 700px;
+            .productTitle{
+                color: #212829;
+                font-size: 30px;
+                font-weight: 500;
+            }
+            .seller {
+                font-size: 16px;
+            }
+
+            .divider {
+                background-color: transparent;
+                display: block;
+                height: 1px;
+                border-width: 0;
+                border-top: 1px solid #e7e7e7;
+                line-height: 19px;
+                margin-top: 14px;
+                margin-bottom: 14px;
+            }
+
+            .price {
+                p{
+                    font-size: 25px;
+                    color: #8bbae5;
+                    font-weight: 500;
+                    margin-bottom: 15px;
+
+                    span {
+                        text-decoration: line-through;
+                    }
+                }
+            }
+
+            .addToCart{
+                width: 150px;
+                margin-bottom: 20px;
+                a {
+                    background-color: #accff0;
+                    border-radius: 5px;
+                    span{
+                        color: white;
+                    }
+
+                    &:hover {
+                        background-color: #8bbae5;
+                    }
+                }
+            }
+
+            .description {
+                h5 {
+                    font-size: 18px;
+                    color: #212829;
+                    font-weight: 600;
+                    margin-bottom: 5px;
+                }
+                font-size: 15px;
+            }
+
+            .specifications {
+                margin-top: 10px;
+                h5 {
+                    font-size: 18px;
+                    color: #212829;
+                    font-weight: 600;
+                    margin-bottom: 5px;
+                }
+                font-size: 15px;
+            }
+        }
+    }
+}

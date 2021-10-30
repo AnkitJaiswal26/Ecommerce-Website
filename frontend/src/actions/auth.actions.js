@@ -2,7 +2,6 @@ import { authConstants } from "./constants";
 import axios from "../helpers/axios";
 import { toast } from "react-toastify";
 import { createBrowserHistory } from "history";
-import { Redirect } from "react-router";
 
 export const register = (user) => {
 	return async (dispatch) => {
@@ -60,7 +59,7 @@ export const activation = (token) => {
 	};
 };
 
-export const login = (user) => {
+export const login = (user, history) => {
 	return async (dispatch) => {
 		dispatch({
 			type: authConstants.LOGIN_REQUEST,
@@ -75,6 +74,7 @@ export const login = (user) => {
 				localStorage.setItem("user", JSON.stringify(user));
 				toast.success("Login Successfully!");
 
+
 				dispatch({
 					type: authConstants.LOGIN_SUCCESS,
 					payload: {
@@ -82,6 +82,8 @@ export const login = (user) => {
 						user,
 					},
 				});
+
+				history.push('/')
 			})
 			.catch((err) => {
 				console.log(err);

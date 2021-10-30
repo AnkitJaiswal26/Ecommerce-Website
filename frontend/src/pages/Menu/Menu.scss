@@ -8,3 +8,54 @@
 	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 	gap: 20px;
 }
+
+.pageNumbers {
+	width: 100%;
+	list-style: none;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 30px;
+
+	li {
+		// padding: 10px;
+		padding: 7px 15px;
+		border: 1px solid #555;
+		margin: 5px;
+		border-radius: 5px;
+		cursor: pointer;
+
+		&.buttons {
+			margin: 5px 10px;
+		}
+
+		button {
+			background-color: transparent;
+			border: none;
+			font-size: 16px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			.icon {
+				margin: 0 5px;
+			}
+
+			&:focus{
+				outline: none;
+			}
+		}
+		
+		&.active {
+			background-color: #8bbae5;
+			color: white;
+			border: 1px solid #8bbae5;
+		}
+
+		&:hover {
+			background-color: #8bbae5;
+			color: white;
+			border: 1px solid #8bbae5;
+		}
+	}
+}

@@ -50,6 +50,11 @@ function App() {
             exact
             render={(props) => <ResetPassword {...props} />}
           />
+          <Route
+            path="/products/:slug"
+            exact
+            render={(props) => <Product {...props} />}
+          />
           <Route path="/register" exact>
             <Register />
           </Route>
