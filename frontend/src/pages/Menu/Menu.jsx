@@ -9,8 +9,62 @@ import "./Menu.scss";
 import Filters from "../../components/Filters/Filters";
 import { ArrowRightAlt } from "@material-ui/icons";
 
-const Menu = () => {
-	const productList = useSelector((state) => state.products.productList);
+const Menu = (props) => {
+	const search = new URLSearchParams(props.location.search).get("search");
+	const sort = new URLSearchParams(props.location.search).get("sort");
+	const min = new URLSearchParams(props.location.search).get("min");
+	const max = new URLSearchParams(props.location.search).get("max");
+	const [regex, setRegex] = useState(new RegExp(search, "i"));
+
+	var productList = useSelector((state) => state.products.productList);
+	if (search) {
+		console.log(search)
+		productList = productList.filter((x) => x.product_name.match(regex));
+	}
+	if (min) {
+		productList = productList.filter(
+			(x) => parseInt(x.retail_price) >= parseInt(min)
+		);
+	}
+	if (max) {
+		productList = productList.filter(
+			(x) => parseInt(x.retail_price) <= parseInt(max)
+		);
+	}
+
+	if (sort === "1") {
+		productList.sort((a, b) =>
+			parseInt(a.retail_price) > parseInt(b.retail_price)
+				? 1
+				: parseInt(b.retail_price) > parseInt(a.retail_price)
+				? -1
+				: 0
+		);
+	} else if (sort === "0") {
+		productList.sort((a, b) =>
+			parseInt(a.retail_price) < parseInt(b.retail_price)
+				? 1
+				: parseInt(b.retail_price) < parseInt(a.retail_price)
+				? -1
+				: 0
+		);
+	} else if (sort === "a") {
+		productList.sort((a, b) =>
+			a.product_name > b.product_name
+				? 1
+				: b.product_name > a.product_name
+				? -1
+				: 0
+		);
+	} else if (sort === "z") {
+		productList.sort((a, b) =>
+			a.product_name < b.product_name
+				? 1
+				: b.product_name < a.product_name
+				? -1
+				: 0
+		);
+	}
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const itemsPerPage = 30;
@@ -31,10 +85,10 @@ const Menu = () => {
 	const handleClick = (event) => {
 		setCurrentPage(Number(event.target.id));
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
 	};
 
 	const renderPageNumbers = pages.map((number) => {
@@ -62,10 +116,10 @@ const Menu = () => {
 			setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
 		}
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
 	};
 
 	const handlePrevbtn = () => {
@@ -76,17 +130,25 @@ const Menu = () => {
 			setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
 		}
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
 	};
 
 	let pageIncrementBtn = null;
 	if (pages.length > maxPageNumberLimit) {
-		pageIncrementBtn = <li style={{
-      border: "none"
-    }} onClick={handleNextbtn}> &hellip; </li>;
+		pageIncrementBtn = (
+			<li
+				style={{
+					border: "none",
+				}}
+				onClick={handleNextbtn}
+			>
+				{" "}
+				&hellip;{" "}
+			</li>
+		);
 	}
 
 	let pageDecrementBtn = null;
@@ -98,8 +160,8 @@ const Menu = () => {
 		<>
 			{isAuth() === false ? <Redirect to="/login" /> : null}
 			<ToastContainer />
-			<Topbar />
-			<Filters />
+			<Topbar {...props} />
+			<Filters {...props} />
 			<div className="productsContainer">
 				{products.map((product) => (
 					<Product
@@ -113,33 +175,33 @@ const Menu = () => {
 					/>
 				))}
 			</div>
-      <ul className="pageNumbers">
-					<li className="buttons">
-						<button
-							onClick={handlePrevbtn}
-							disabled={currentPage === pages[0] ? true : false}
-						>
-              Previous
-						</button>
-					</li>
-					{pageDecrementBtn}
-					{renderPageNumbers}
-					{pageIncrementBtn}
+			<ul className="pageNumbers">
+				<li className="buttons">
+					<button
+						onClick={handlePrevbtn}
+						disabled={currentPage === pages[0] ? true : false}
+					>
+						Previous
+					</button>
+				</li>
+				{pageDecrementBtn}
+				{renderPageNumbers}
+				{pageIncrementBtn}
 
-					<li className="buttons">
-						<button
-							onClick={handleNextbtn}
-							disabled={
-								currentPage === pages[pages.length - 1]
-									? true
-									: false
-							}
-						>
-							Next
-							<ArrowRightAlt className="icon"/>
-						</button>
-					</li>
-				</ul>
+				<li className="buttons">
+					<button
+						onClick={handleNextbtn}
+						disabled={
+							currentPage === pages[pages.length - 1]
+								? true
+								: false
+						}
+					>
+						Next
+						<ArrowRightAlt className="icon" />
+					</button>
+				</li>
+			</ul>
 		</>
 	);
 };
