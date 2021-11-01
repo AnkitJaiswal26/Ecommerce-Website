@@ -6,6 +6,7 @@ import styles from "./Register.module.css";
 import { colors } from "@material-ui/core/";
 import Select from "react-select";
 import { isAuth, register } from "../../actions/auth.actions";
+import BharatKaSparsh from "../../images/BharatKaSparsh.jpg";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,10 @@ const Register = () => {
         className={`w-full h-screen flex justify-center items-center ${styles.wrapper}`}
       >
         <div className={`${styles.mainContainer}`}>
-          <div className={`${styles.contentBox}`}></div>
+          <div className={`${styles.contentBox}`}>
+            <h2>BharatKaSparsh</h2>
+            <img src={BharatKaSparsh}></img>
+          </div>
           <div className={`${styles.formBox}`}>
             <form onSubmit={onSubmit}>
               <h2 className={`${styles.heading}`}>Create your Account</h2>

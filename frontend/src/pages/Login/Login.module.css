@@ -29,6 +29,18 @@
 	justify-content: center;
 }
 
+.contentBox img{
+	width:'75%';
+	height: 80%;
+	border-radius: 4px;
+}
+
+.contentBox h2{
+	color: white;
+	font-size: 2em;
+	margin-bottom: 5px;
+}
+
 .formBox {
 	width: 50%;
 	height: 100%;
