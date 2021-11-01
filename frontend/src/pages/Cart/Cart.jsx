@@ -3,7 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./Cart.scss";
 import Topbar from "../../components/Topbar/Topbar";
-import CartItem from "../../components/cartItem/CartItem";
+import CartItem from "../../components/CartItem/CartItem";
 import axios from "../../helpers/axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { isAuth } from "../../actions/auth.actions";
