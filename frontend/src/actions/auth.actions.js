@@ -218,7 +218,7 @@ export const updateEmail = (email) => {
 				email: email,
 			})
 			.then((res) => {
-				const { message, user } = res.data;
+				const { message } = res.data;
 				toast.success(message);
 
 				dispatch({

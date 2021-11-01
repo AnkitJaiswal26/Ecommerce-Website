@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, Link, Redirect } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./Activation.module.css";
 import jwt from "jsonwebtoken";
-import store from "../../store";
 import { isAuth, activation } from "../../actions/auth.actions";
 
 const Activation = ({ match }) => {
@@ -15,8 +14,6 @@ const Activation = ({ match }) => {
 	const [token, setToken] = useState("");
 	const data = useSelector((state) => state.auth);
 
-	const [error, setError] = useState("");
-
 	useEffect(() => {
 		let token = match.params.token;
 		let user = jwt.decode(token);
@@ -26,9 +23,9 @@ const Activation = ({ match }) => {
 		}
 		if (user) {
 			setUsername(user.username);
-		} else{
-      toast.error("Invalid token")
-    }
+		} else {
+			toast.error("Invalid token");
+		}
 		// eslint-disable-next-line
 	}, [match.params]);
 
@@ -38,18 +35,17 @@ const Activation = ({ match }) => {
 	};
 
 	useEffect(() => {
-		if(data.error) toast.error(data.error)
-    if(data.message) toast.message(data.message)
+		if (data.error) toast.error(data.error);
+		if (data.message) toast.message(data.message);
 	}, [data]);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
 		try {
-			setError("");
 			dispatch(activation(token));
 			routeChange("productIndex");
 		} catch (error) {
-			setError(error);
+			toast.error(error);
 		}
 	};
 

@@ -1,34 +1,64 @@
-import asyncHandler from "express-async-handler";
-import Order from "../models/Order.model.js";
+// const = require("express-async-handler");
+const Order = require("../models/Order.model.js");
+const Product = require("../models/Product.model");
 
 // @desc    Create new order
 // @route   POST /api/orders
 // @access  Private
-const addOrderItems = asyncHandler(async (req, res) => {
-	const { total, shipping, products } = req.body;
+exports.addOrderItems = async (req, res) => {
+	const { products } = req.body;
+	console.log(products);
+
+	var quantity = [];
 
 	if (products && products.length === 0) {
-		res.status(400);
-		throw new Error("No order items");
-		return;
+		return res.status(400).json("No order items");
 	} else {
+		var total = 0;
+		var productArray = [];
+		for (let i = 0; i < products.length; i++) {
+			const product = await Product.findOne({ _id: products[i].product });
+			console.log(
+				"-------------------------------------------------------"
+			);
+			quantity.push(parseInt(products[i].qty));
+			console.log("Product: ", quantity);
+			console.log(
+				"-------------------------------------------------------"
+			);
+			productArray.push(product);
+			total += products[i].price;
+		}
+		console.log(quantity);
+		total = 0.9 * total;
+		var shipping = 0;
+		if (total >= 500) {
+			shipping = 50;
+		}
+
 		const order = new Order({
 			user: req.user._id,
 			total,
 			shipping,
-			products,
+			products: productArray,
+			quantity: quantity,
 		});
 
-		const createdOrder = await order.save();
+		try {
+			const createdOrder = await order.save();
 
-		res.status(201).json(createdOrder);
+			res.status(201).json(createdOrder);
+		} catch (err) {
+			// console.log(err);
+			res.status(500).json("Error Occured. Try again later!");
+		}
 	}
-});
+};
 
 // @desc    Get order by ID
 // @route   GET /api/orders/:id
 // @access  Private
-const getOrderById = asyncHandler(async (req, res) => {
+exports.getOrderById = async (req, res) => {
 	const order = await Order.findById(req.params.id).populate(
 		"user",
 		"name email"
@@ -40,12 +70,12 @@ const getOrderById = asyncHandler(async (req, res) => {
 		res.status(404);
 		throw new Error("Order not found");
 	}
-});
+};
 
 // @desc    Update order to paid
 // @route   GET /api/orders/:id/pay
 // @access  Private
-const updateOrderToPaid = asyncHandler(async (req, res) => {
+exports.updateOrderToPaid = async (req, res) => {
 	const order = await Order.findById(req.params.id);
 
 	if (order) {
@@ -60,33 +90,44 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 
 		const updatedOrder = await order.save();
 
-		res.json(updatedOrder);
+		res.status(200).json(updatedOrder);
 	} else {
 		res.status(404);
 		throw new Error("Order not found");
 	}
-});
+};
 
 // @desc    Get logged in user orders
 // @route   GET /api/orders/myorders
 // @access  Private
-const getMyOrders = asyncHandler(async (req, res) => {
-	const orders = await Order.find({ user: req.user._id });
-	res.json(orders);
-});
+exports.getMyOrders = async (req, res) => {
+	var orders = await Order.find({ user: req.user._id });
+	var finalOrders = [];
+	console.log("Orders ", orders);
+	for (var i = 0; i < orders.length; i++) {
+		var productArray = [];
+		for (var j = 0; j < orders[i].products.length; j++) {
+			const product = await Product.findOne({
+				_id: orders[i].products[j],
+			});
+			productArray.push(product);
+		}
+		finalOrders.push({
+			total: orders[i].total,
+			shipping: orders[i].shipping,
+			quantity: orders[i].quantity,
+			created_at: orders[i].created_at,
+			products: productArray,
+		});
+	}
+	console.log(finalOrders);
+	res.status(200).json({ orders: finalOrders });
+};
 
 // @desc    Get all orders
 // @route   GET /api/orders
 // @access  Private/Admin
-const getOrders = asyncHandler(async (req, res) => {
+exports.getOrders = async (req, res) => {
 	const orders = await Order.find({}).populate("user", "id name");
 	res.json(orders);
-});
-
-export {
-	addOrderItems,
-	getOrderById,
-	updateOrderToPaid,
-	getMyOrders,
-	getOrders,
 };

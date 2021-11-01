@@ -14,11 +14,11 @@ const Menu = (props) => {
 	const sort = new URLSearchParams(props.location.search).get("sort");
 	const min = new URLSearchParams(props.location.search).get("min");
 	const max = new URLSearchParams(props.location.search).get("max");
-	const [regex, setRegex] = useState(new RegExp(search, "i"));
+	const regex = new RegExp(search, "i");
 
 	var productList = useSelector((state) => state.products.productList);
 	if (search) {
-		console.log(search)
+		console.log(search);
 		productList = productList.filter((x) => x.product_name.match(regex));
 	}
 	if (min) {
@@ -69,7 +69,7 @@ const Menu = (props) => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const itemsPerPage = 30;
 
-	const [pageNumberLimit, setpageNumberLimit] = useState(5);
+	const pageNumberLimit = 5;
 	const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(5);
 	const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
 

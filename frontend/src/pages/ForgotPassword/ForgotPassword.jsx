@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styles from "./ForgotPassword.module.css";
-import store from "../../store";
 import { isAuth, forgotPassword } from "../../actions/auth.actions";
 
 const ForgotPassword = () => {

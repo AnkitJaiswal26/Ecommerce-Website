@@ -3,6 +3,7 @@ const Cart = require("../models/Cart.model");
 
 // Returns the user's current cart
 exports.getCart = async (req, res) => {
+	console.log("Hii")
 	const cart = await Cart.findOne({ userId: req.body.user._id });
 	return res.status(200).json({
 		cart,

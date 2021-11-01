@@ -60,3 +60,7 @@ export const cartConstants = {
   CART_ADD_ONE: "CART_ADD_ONE",
   CART_REMOVE_ONE: "CART_REMOVE_ONE"
 };
+
+export const orderConstants = {
+  GET_ALL_ORDERS: "GET_ALL_ORDERS"
+}

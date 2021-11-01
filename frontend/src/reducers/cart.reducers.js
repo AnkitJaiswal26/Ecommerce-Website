@@ -35,6 +35,9 @@ export const cartReducer = (state = initialState, action) => {
 					cartItems: [...state.cartItems, item],
 				};
 			}
+
+			localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+
 			break;
 		case cartConstants.CART_REMOVE_ITEM:
 			localStorage.setItem(

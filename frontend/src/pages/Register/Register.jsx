@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useHistory, Link, Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styles from "./Register.module.css";
 import { colors } from "@material-ui/core/";
 import Select from "react-select";

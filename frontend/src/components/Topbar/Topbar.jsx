@@ -74,7 +74,7 @@ const Topbar = (props) => {
 					</div>
 					<div className="smallContainer">
 						<ul className="links">
-							<li className="listItem">
+							{/* <li className="listItem">
 								<Link to="/">
 									<div className="navLink">Crafts</div>
 								</Link>
@@ -98,7 +98,7 @@ const Topbar = (props) => {
 								<Link to="/">
 									<div className="navLink">Wall Decor</div>
 								</Link>
-							</li>
+							</li> */}
 						</ul>
 						<div className="profile">
 							<div className="search">

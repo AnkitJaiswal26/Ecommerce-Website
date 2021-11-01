@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import "./Filters.scss";
 
@@ -9,7 +8,6 @@ const Filters = (props) => {
 	const max = new URLSearchParams(props.location.search).get("max");
 
 	const [dropdown, setDropdown] = useState(false);
-	const [query, setQuery] = useState({});
 
 	const history = useHistory();
 

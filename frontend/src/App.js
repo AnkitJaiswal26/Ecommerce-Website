@@ -10,6 +10,7 @@ import Product from "./pages/Product/Product";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import MyOrders from "./pages/MyOrders/MyOrders";
 import Cart from "./pages/Cart/Cart";
+import Success from "./pages/Success/Success";
 
 function App() {
 	return (
@@ -55,6 +56,11 @@ function App() {
 						path="/users/password/reset/:token"
 						exact
 						render={(props) => <ResetPassword {...props} />}
+					/>
+					<Route
+						path="/success"
+						exact
+						render={(props) => <Success {...props} />}
 					/>
 					<Route
 						path="/products/:slug"

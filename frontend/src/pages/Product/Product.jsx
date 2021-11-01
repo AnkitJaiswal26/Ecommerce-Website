@@ -1,18 +1,35 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./Product.scss";
 import Topbar from "../../components/Topbar/Topbar";
+import { addToCart } from "../../actions/cart.actions";
 
-const Product = ({ match }) => {
+const Product = (props) => {
+	const match = props.match;
 	const product = useSelector((state) =>
 		state.products.productList.filter((x) => x.slug === match.params.slug)
 	)[0];
-	
-    console.log(product);
+
+	const dispatch = useDispatch();
+
+	const clickedCart = () => {
+		dispatch(
+			addToCart(
+				product._id,
+				product.image,
+				product.product_name,
+				product.retail_price,
+				product.brand,
+				1
+			)
+		);
+	};
+
+	console.log(product);
 
 	return (
 		<div className="mainIndividualProductContainer">
-			<Topbar />
+			<Topbar {...props }/>
 			<div className="productContainer">
 				<div className="imageContainer">
 					<img src={product ? product.image : ""} alt="" />
@@ -31,18 +48,18 @@ const Product = ({ match }) => {
 					<div className="addToCart">
 						<a
 							className="w-full shadow-sm py-2 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
-							// onClick={onSubmit}
+							onClick={clickedCart}
 							href="/"
 						>
 							<span>Add to Cart</span>
 						</a>
 					</div>
 					<div className="description">
-                        <h5>Description:</h5>
+						<h5>Description:</h5>
 						<p>{product ? product.description : ""}</p>
 					</div>
 
-                    {/* <div className="specifications">
+					{/* <div className="specifications">
                         <h5>Specifications: </h5>
                     </div> */}
 				</div>

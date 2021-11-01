@@ -1,17 +1,19 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import {
+const {
 	addOrderItems,
 	getOrderById,
 	updateOrderToPaid,
 	getMyOrders,
 	getOrders,
-} from "../controllers/order.controller.js";
-import { protect, admin } from "../middleware/authMiddleware.js";
+} = require("../controllers/order.controller");
+const verify = require("../helpers/verifyToken");
 
-router.route("/").post(protect, addOrderItems).get(protect, admin, getOrders);
-router.route("/myorders").get(protect, getMyOrders);
-router.route("/:id").get(protect, getOrderById);
-router.route("/:id/pay").put(protect, updateOrderToPaid);
+// const { protect, admin } = require("../middleware/authMiddleware");
 
-export default router;
+router.post("/", verify, addOrderItems);
+router.get("/myorders", verify, getMyOrders);
+router.get("/:id", verify, getOrderById);
+router.put("/:id/pay", verify, updateOrderToPaid);
+
+module.exports = router;

@@ -14,6 +14,20 @@ const stripePromise = loadStripe(
 );
 
 const Cart = (props) => {
+	const cancelled = new URLSearchParams(props.location.search).get("status");
+	if(cancelled === "cancelled") {
+		toast.error("Payment Unsuccessful! Try again");
+	}
+	window.onload = () => {
+		console.log("Hii")
+		axios.get("/cart/").then((res) => {
+			localStorage.setItem(
+				"cartItems",
+				JSON.stringify(res.data.products)
+			);
+		});
+	};
+
 	const cart = useSelector((state) => state.cart.cartItems);
 	const amount = cart.reduce(
 		(total, item) => total + item.qty * item.price,

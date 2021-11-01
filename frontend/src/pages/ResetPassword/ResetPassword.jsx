@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styles from "./ResetPassword.module.css";
-import store from "../../store";
 import { isAuth, resetPassword } from "../../actions/auth.actions";
 
 const ResetPassword = ({ match }) => {
 	const dispatch = useDispatch();
-	const history = useHistory();
 
 	const [token, setToken] = useState("");
 	const [password, setPassword] = useState("");
