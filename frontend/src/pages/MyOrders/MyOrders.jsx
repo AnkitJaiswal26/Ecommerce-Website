@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, Link, Redirect } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import store from "../../store/index";
-import { useSelector } from "react-redux";
-import { getItems } from "../../actions/products.action";
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import { isAuth } from "../../actions/auth.actions";
 import Topbar from "../../components/Topbar/Topbar";
 import "./MyOrders.scss";
-import { WrapText } from "@material-ui/icons";
 import axios from "../../helpers/axios";
 
 const MyOrders = (props) => {
